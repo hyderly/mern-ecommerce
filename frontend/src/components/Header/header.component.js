@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./header.styles.css";
 
@@ -7,23 +8,23 @@ const Header = () => {
     <header>
       <div className="navbar">
         <div>
-          <a className="home-link" href="/">
+          <Link className="home-link" to="/">
             ProShop
-          </a>
+          </Link>
         </div>
         <div>
           <ul className="sub-links">
             <li>
-              <a href="/profile">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-              </a>
-            </li>
-            <li>
-              <a href="/cart">
+              <Link to="/cart">
                 <i class="fas fa-cart-plus"></i>
                 <span>Cart</span>
-              </a>
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile">
+                <i class="fas fa-user"></i>
+                <span>SignIn</span>
+              </Link>
             </li>
           </ul>
         </div>

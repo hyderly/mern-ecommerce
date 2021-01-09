@@ -14,6 +14,7 @@ a {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding-top: 10px !important;
 }
 
 .home-link {
@@ -30,7 +31,7 @@ a {
 }
 
 .sub-links > li {
-  margin-right: 15px;
+  margin-right: 20px;
 }
 
 .sub-links > li > a > span {

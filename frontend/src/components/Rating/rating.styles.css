@@ -1,0 +1,9 @@
+.fa-star,
+.fa-star-half-alt,
+.far {
+  color: #ffdf00;
+}
+
+.rating-text {
+  margin-left: 8px !important;
+}
