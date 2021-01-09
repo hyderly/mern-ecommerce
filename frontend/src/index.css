@@ -8,5 +8,18 @@ body {
 }
 
 main {
-  min-height: 92vh;
+  min-height: 90vh;
 }
+
+.main-container {
+  padding: 50px;
+}
+
+/* colors */
+/* black-1: #2f3640;
+black-2: #353b48;
+
+white: #f5f6fa;
+
+blue-1: #40739e;
+blue-2: #487eb0; */
