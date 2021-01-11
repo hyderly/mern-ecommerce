@@ -1,0 +1,16 @@
+.product-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 10px 30px;
+  margin-top: 80px;
+}
+
+.checkout-btn,
+.product-btn {
+  background-color: #222 !important;
+  color: #fff !important;
+  padding: 15px 20px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+}

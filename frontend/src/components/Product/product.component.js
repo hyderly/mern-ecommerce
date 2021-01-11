@@ -6,7 +6,6 @@ import "./product.styles.css";
 import Rating from "../Rating/rating.component";
 
 const Product = ({ product }) => {
-  console.log(product.image);
   return (
     <div className="card">
       <Link to={`/product/${product._id}`}>

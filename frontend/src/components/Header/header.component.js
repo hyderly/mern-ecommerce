@@ -16,13 +16,13 @@ const Header = () => {
           <ul className="sub-links">
             <li>
               <Link to="/cart">
-                <i class="fas fa-cart-plus"></i>
+                <i className="fas fa-cart-plus"></i>
                 <span>Cart</span>
               </Link>
             </li>
             <li>
               <Link to="/profile">
-                <i class="fas fa-user"></i>
+                <i className="fas fa-user"></i>
                 <span>SignIn</span>
               </Link>
             </li>
