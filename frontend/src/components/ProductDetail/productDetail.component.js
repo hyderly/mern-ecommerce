@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import Rating from "../Rating/rating.component";
 
 import "./productDetail.styles.css";
 
-import products from "../../products";
-
 const ProductDetail = ({ match }) => {
-  const product = products.find(product => product._id === match.params.id);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+      setProduct(data);
+    };
+
+    fetchProduct();
+  }, [match.params.id]);
+
   return (
     <>
       <Link to="/" className="product-btn">
@@ -31,7 +40,12 @@ const ProductDetail = ({ match }) => {
             <h4 className="product-status">
               Status: {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
             </h4>
-            <button className="checkout-btn btn" disabled={product.countInStock === 0}>Add To Cart</button>
+            <button
+              className="checkout-btn btn"
+              disabled={product.countInStock === 0}
+            >
+              Add To Cart
+            </button>
           </div>
         </div>
       </div>
