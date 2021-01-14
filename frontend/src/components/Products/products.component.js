@@ -3,6 +3,8 @@ import axios from "axios";
 import "./products.styles.css";
 import Product from "../Product/product.component";
 
+// import products from '../../products'
+
 const Products = () => {
   const [products, setProducts] = useState([]);
 
@@ -10,6 +12,7 @@ const Products = () => {
     const fetchProducts = async () => {
       const { data } = await axios.get("/api/products");
       setProducts(data);
+      console.log(data);
     };
 
     fetchProducts();

@@ -1,5 +1,5 @@
 {
-  "name": "MERNEcommerce",
+  "name": "mern-ecommerce",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -8,7 +8,9 @@
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server \" \"npm run client\" "
+    "dev": "concurrently \"npm run server \" \"npm run client\" ",
+    "data:import": "node backend/seeder -i",
+    "data:destroy": "node backend/seeder -d"
   },
   "repository": {
     "type": "git",
@@ -22,8 +24,10 @@
   },
   "homepage": "https://github.com/hyderly/mern-ecommerce#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
     "mongoose": "^5.11.11"
   },
   "devDependencies": {

@@ -1,8 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 
-import products from "./products.js";
+import errorHanlder from "./middlewares/errorHandler.js";
+
 import connectDB from "./config/db.js";
+
+// Routes
+import productRoute from "./routes/productRoutes.js";
 
 const app = express();
 
@@ -11,17 +15,14 @@ dotenv.config();
 connectDB();
 
 app.get("/", (req, res) => {
-  res.send("API running...");
+  res.json("API running ...");
 });
 
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
+// Routes Middleware
+app.use("/api/products", productRoute);
 
-app.get("/api/products/:id", (req, res) => {
-  const product = products.find(product => product._id === req.params.id);
-  res.json(product);
-});
+// ErrorHandler Custom Middleware
+app.use(errorHanlder);
 
 const PORT = process.env.PORT || 5000;
 
