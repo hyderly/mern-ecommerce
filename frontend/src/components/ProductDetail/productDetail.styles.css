@@ -14,3 +14,23 @@
   outline: none;
   border: none;
 }
+
+.btn:hover {
+  cursor: pointer;
+}
+
+select {
+  background-color: #fff !important;
+  color: #222;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 16px;
+  min-width: 50px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+select > option {
+  border-bottom: 1px solid #222 !important;
+}

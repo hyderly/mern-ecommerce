@@ -1,54 +1,89 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import axios from "axios";
+
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
+
 import Rating from "../Rating/rating.component";
+import { detailProduct } from "../../redux/productDetail/productDetail.actions";
+
+import WithSpinner from "../WithSpinner/with-spinner.component";
+import ErrorMessage from "../ErrorMessage/error-message.component";
 
 import "./productDetail.styles.css";
 
-const ProductDetail = ({ match }) => {
-  const [product, setProduct] = useState({});
+const ProductDetail = ({ history, match }) => {
+  const [qty, setQty] = useState(1);
+
+  const dispatch = useDispatch();
+
+  const productDetail = useSelector(state => state.productDetail);
+  const { product, loading, error } = productDetail;
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/${match.params.id}`);
-      setProduct(data);
-    };
+    dispatch(detailProduct(match.params.id));
+  }, [dispatch, match.params.id]);
 
-    fetchProduct();
-  }, [match.params.id]);
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   return (
     <>
       <Link to="/" className="product-btn">
         Go Back
       </Link>
-      <div className="product-detail">
-        <div className="product-img">
-          <img src={product.image} alt={product.name} />
-        </div>
-        <div classNam="product-content">
-          <h2 className="product-name">{product.name}</h2>
-          <Rating
-            value={product.rating}
-            text={`${product.numReviews} reviews`}
-          />
-          <h4 className="product-price">${product.price}</h4>
-          <p className="product-description">{product.description}</p>
-          <div className="product-subdetails">
-            <h4 className="product-price">Price: ${product.price}</h4>
-            <h4 className="product-status">
-              Status: {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
-            </h4>
-            <button
-              className="checkout-btn btn"
-              disabled={product.countInStock === 0}
-            >
-              Add To Cart
-            </button>
+      {loading ? (
+        <WithSpinner />
+      ) : error ? (
+        <ErrorMessage>{error}</ErrorMessage>
+      ) : (
+        <div className="product-detail">
+          <div className="product-img">
+            <img src={product.image} alt={product.name} />
+          </div>
+          <div classNam="product-content">
+            <h2 className="product-name">{product.name}</h2>
+            <Rating
+              value={product.rating}
+              text={`${product.numReviews} reviews`}
+            />
+            <h4 className="product-price">${product.price}</h4>
+            <p className="product-description">{product.description}</p>
+            <div className="product-subdetails">
+              <h4 className="product-price">Price: ${product.price}</h4>
+              <h4 className="product-status">
+                Status: {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
+              </h4>
+              {product.countInStock > 0 && (
+                <>
+                  <label>QTY: </label>
+                  <select
+                    value={qty}
+                    onChange={e => setQty(e.target.value)}
+                  >
+                    {[...Array(product.countInStock).keys()].map(x => (
+                      <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              )}
+              <button
+                onClick={addToCartHandler}
+                type="button"
+                className="checkout-btn btn"
+                disabled={product.countInStock === 0}
+              >
+                Add To Cart
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

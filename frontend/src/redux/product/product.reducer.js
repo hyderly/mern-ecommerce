@@ -2,7 +2,6 @@ import { ProductActionTypes } from "./product.types";
 
 const INITIAL_STATE = {
   products: [],
-  loading: false,
 };
 
 export const productReducer = (state = INITIAL_STATE, action) => {
@@ -20,7 +19,7 @@ export const productReducer = (state = INITIAL_STATE, action) => {
     case ProductActionTypes.PRODUCT_LIST_FAIL:
       return {
         loading: false,
-        products: action.payload,
+        error: action.payload,
       };
     default:
       return state;

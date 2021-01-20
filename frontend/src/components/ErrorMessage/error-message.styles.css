@@ -1,0 +1,11 @@
+.ErrorMessage {
+  margin-top: 25px;
+  color: #fff;
+  width: 50vw;
+  height: auto;
+  padding: 20px 20px;
+}
+
+.ErrorMessage-danger {
+  background-color: rgba(168, 1, 1, 0.63);
+}
