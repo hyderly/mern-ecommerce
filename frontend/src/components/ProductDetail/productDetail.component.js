@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import axios from "axios";
-
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -60,10 +58,7 @@ const ProductDetail = ({ history, match }) => {
               {product.countInStock > 0 && (
                 <>
                   <label>QTY: </label>
-                  <select
-                    value={qty}
-                    onChange={e => setQty(e.target.value)}
-                  >
+                  <select value={qty} onChange={e => setQty(e.target.value)}>
                     {[...Array(product.countInStock).keys()].map(x => (
                       <option key={x + 1} value={x + 1}>
                         {x + 1}
@@ -72,14 +67,16 @@ const ProductDetail = ({ history, match }) => {
                   </select>
                 </>
               )}
-              <button
-                onClick={addToCartHandler}
-                type="button"
-                className="checkout-btn btn"
-                disabled={product.countInStock === 0}
-              >
-                Add To Cart
-              </button>
+              {product.countInStock > 0 && (
+                <button
+                  onClick={addToCartHandler}
+                  type="button"
+                  className="checkout-btn btn"
+                  disabled={product.countInStock === 0}
+                >
+                  Add To Cart
+                </button>
+              )}
             </div>
           </div>
         </div>

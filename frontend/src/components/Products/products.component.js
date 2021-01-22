@@ -25,7 +25,7 @@ const Products = () => {
       {loading ? (
         <WithSpinner />
       ) : error ? (
-        <h3>{error}</h3>
+        <ErrorMessage>{error}</ErrorMessage>
       ) : (
         products.map(product => <Product product={product} key={product._id} />)
       )}
