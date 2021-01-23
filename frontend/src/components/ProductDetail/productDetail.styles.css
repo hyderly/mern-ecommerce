@@ -1,8 +1,14 @@
 .product-detail {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 10px 30px;
   margin-top: 80px;
+}
+
+.product-content {
+  max-width: 25vw;
+  padding: 0 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .checkout-btn,
@@ -25,7 +31,7 @@ select {
   text-align: center;
   padding: 15px 20px;
   font-size: 16px;
-  min-width: 50px;
+  width: 100px;
   height: auto;
   margin-right: 20px;
   border-radius: 5px;
@@ -33,4 +39,8 @@ select {
 
 select > option {
   border-bottom: 1px solid #222 !important;
+}
+
+label {
+  margin-right: 10px;
 }

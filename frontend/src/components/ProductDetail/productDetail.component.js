@@ -42,7 +42,7 @@ const ProductDetail = ({ history, match }) => {
           <div className="product-img">
             <img src={product.image} alt={product.name} />
           </div>
-          <div classNam="product-content">
+          <div className="product-content">
             <h2 className="product-name">{product.name}</h2>
             <Rating
               value={product.rating}
