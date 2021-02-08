@@ -33,9 +33,6 @@ const Cart = ({ match, location, history }) => {
       <h1 className="cart-title">Shopping Cart</h1>
       <div className="cart-box">
         <div className="cart-items">
-          {setInterval(() => {
-            <withSpinner />;
-          }, 3000)}
           {cartItems.length === 0 ? (
             <ErrorMessage>
               Cart is Empty{" "}
