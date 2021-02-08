@@ -26,7 +26,6 @@ const Cart = ({ match, location, history }) => {
     dispatch(removeFromCart(id));
   };
 
-  console.log(cartItems.map(item => item.name));
 
   return (
     <div className="Cart">

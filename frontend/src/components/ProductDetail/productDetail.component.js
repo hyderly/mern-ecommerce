@@ -5,10 +5,12 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 import Rating from "../Rating/rating.component";
-import { detailProduct } from "../../redux/productDetail/productDetail.actions";
 
 import WithSpinner from "../WithSpinner/with-spinner.component";
 import ErrorMessage from "../ErrorMessage/error-message.component";
+
+// Redux Action
+import { detailProduct } from "../../redux/productDetail/productDetail.actions";
 
 import "./productDetail.styles.css";
 
@@ -31,7 +33,7 @@ const ProductDetail = ({ history, match }) => {
   return (
     <>
       <Link to="/" className="product-btn">
-        Go Back
+        &#10094; Go Back
       </Link>
       {loading ? (
         <WithSpinner />
