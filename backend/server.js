@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 
 // Routes
 import productRoute from "./routes/productRoutes.js";
+import userRoute from "./routes/userRoutes.js";
 
 const app = express();
 
@@ -18,8 +19,13 @@ app.get("/", (req, res) => {
   res.json("API running ...");
 });
 
+// body parser
+app.use(express.json());
+
 // Routes Middleware
 app.use("/api/products", productRoute);
+
+app.use("/api/users/login", userRoute);
 
 // ErrorHandler Custom Middleware
 app.use(errorHanlder);
