@@ -6,10 +6,13 @@ import errorHanlder from "./middlewares/errorHandler.js";
 import connectDB from "./config/db.js";
 
 // Routes
-import productRoute from "./routes/productRoutes.js";
-import userRoute from "./routes/userRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
+
+// body parser
+app.use(express.json());
 
 dotenv.config();
 
@@ -19,13 +22,9 @@ app.get("/", (req, res) => {
   res.json("API running ...");
 });
 
-// body parser
-app.use(express.json());
-
 // Routes Middleware
-app.use("/api/products", productRoute);
-
-app.use("/api/users/login", userRoute);
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 // ErrorHandler Custom Middleware
 app.use(errorHanlder);
