@@ -3,8 +3,8 @@ import "./with-spinner.styles.css";
 
 const WithSpinner = () => {
   return (
-    <div class="SpinnerOverlay">
-      <div class="SpinnerContainer"></div>
+    <div className="SpinnerOverlay">
+      <div className="SpinnerContainer"></div>
     </div>
   );
 };

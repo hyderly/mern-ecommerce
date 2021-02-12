@@ -42,11 +42,11 @@ const Cart = ({ match, location, history }) => {
           ) : (
             cartItems.map(item => (
               <div className="cart-item" key={item.product}>
-                <img class="item-image" src={item.image} alt={item.name} />
-                <p class="item-title">
+                <img className="item-image" src={item.image} alt={item.name} />
+                <p className="item-title">
                   <Link to={`/product/${item.product}`}>{item.name}</Link>
                 </p>
-                <p class="item-price">${item.price}</p>
+                <p className="item-price">${item.price}</p>
                 {item.countInStock > 0 && (
                   <>
                     <label>QTY: </label>
