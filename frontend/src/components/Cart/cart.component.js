@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import withSpinner from "../WithSpinner/with-spinner.component";
 import ErrorMessage from "../ErrorMessage/error-message.component";
 import { addToCart, removeFromCart } from "../../redux/cart/cart.actions";
 
 import "./cart.styles.css";
 
-const Cart = ({ match, location, history }) => {
+const Cart = ({ match, location }) => {
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector(state => state.cart);
@@ -25,7 +24,6 @@ const Cart = ({ match, location, history }) => {
   const removeFromCartHandler = id => {
     dispatch(removeFromCart(id));
   };
-
 
   return (
     <div className="Cart">

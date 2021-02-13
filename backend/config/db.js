@@ -11,7 +11,7 @@ const connectDB = async () => {
 
     console.log(`DataBase Connected at ${connect.connection.host}`);
   } catch (error) {
-    console.log("Network Error: Please check internet connection");
+    console.log("MongoDB connecttion error");
     process.exit(1);
   }
 };
