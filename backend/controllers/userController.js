@@ -1,6 +1,7 @@
-import asyncHandler from "express-async-handler";
 import ErrorResponse from "../utils/errorResponse.js";
 import generateToken from "../utils/generateToken.js";
+
+import asyncHandler from "../middlewares/async.js";
 
 // Product Model
 import User from "../models/User.js";
@@ -22,13 +23,12 @@ export const authUser = asyncHandler(async (req, res, next) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(401);
-    return next(new ErrorResponse("Invalid mail or password"));
+    return next(new ErrorResponse("Invalid mail or password", 401));
   }
 });
 
 // @desc  Register a new user
-// @route POST /api/users
+// @route POST /api/users/register
 // @access public
 export const registerUser = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -54,7 +54,7 @@ export const registerUser = asyncHandler(async (req, res, next) => {
       token: generateToken(user._id),
     });
   } else {
-    return next(new ErrorResponse("User Registeration Error", 400));
+    return next(new ErrorResponse("Invalid mail or password", 400));
   }
 });
 
@@ -72,6 +72,6 @@ export const getUserProfile = asyncHandler(async (req, res, next) => {
       isAdmin: user.isAdmin,
     });
   } else {
-    return next(new ErrorResponse("Invalid Email or Password", 401));
+    return next(new ErrorResponse("Invalid mail or password", 401));
   }
 });

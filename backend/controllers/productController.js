@@ -1,5 +1,6 @@
-import asyncHandler from "express-async-handler";
 import ErrorResponse from "../utils/errorResponse.js";
+
+import asyncHandler from "../middlewares/async.js";
 
 // Product Model
 import Product from "../models/Product.js";

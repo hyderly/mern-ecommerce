@@ -18,7 +18,7 @@ export const login = (email, password) => async dispatch => {
       config
     );
     dispatch({
-      type: UserLoginTypes.USER_LOGIN_SUCESS,
+      type: UserLoginTypes.USER_LOGIN_SUCCESS,
       payload: data,
     });
 
@@ -32,4 +32,11 @@ export const login = (email, password) => async dispatch => {
           : error.message,
     });
   }
+};
+
+export const logout = () => dispatch => {
+  localStorage.removeItem("userInfo");
+  dispatch({
+    type: UserLoginTypes.USER_LOGOUT,
+  });
 };

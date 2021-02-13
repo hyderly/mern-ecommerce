@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
@@ -19,7 +19,7 @@ const LoginPage = ({ location, history }) => {
 
   useEffect(() => {
     if (userInfo) {
-      history.pushState(redirect);
+      history.push(redirect);
     }
   }, [history, userInfo, redirect]);
 
@@ -32,8 +32,8 @@ const LoginPage = ({ location, history }) => {
   return (
     <form className="form" onSubmit={submitHandler}>
       <h1 className="form-title">SignIn</h1>
-      {error && <ErrorMessag>{error}</ErrorMessage>}
-      {loading && <withRouter />}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {loading && <WithSpinner />}
       {}
       <div className="form-box">
         <div className="form-group">
@@ -41,6 +41,7 @@ const LoginPage = ({ location, history }) => {
           <input
             onChange={e => setEmail(e.target.value)}
             name="email"
+            type="email"
             value={email}
             placeholder="Enter Email Address"
           />
@@ -50,6 +51,7 @@ const LoginPage = ({ location, history }) => {
           <input
             onChange={e => setPassword(e.target.value)}
             name="password"
+            type="password"
             value={password}
             placeholder="Enter Password"
           />
