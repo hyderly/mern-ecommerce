@@ -7,6 +7,7 @@ import HomePage from "./pages/Home/home.component";
 import ProductPage from "./pages/Product/product.component";
 import CartPage from "./pages/Cart/cart.component";
 import LoginPage from "./pages/Login/login.component";
+import RegisterPage from "./pages/Register/register.component";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/product/:id" component={ProductPage} />
           <Route path="/cart/:id?" component={CartPage} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
         </main>
       </Switch>
       <Footer />

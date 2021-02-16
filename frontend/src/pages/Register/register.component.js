@@ -5,17 +5,20 @@ import { Link } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
-import { login } from "../../redux/user/user.actions";
+import { register } from "../../redux/user/user.actions";
 
-const LoginPage = ({ location, history }) => {
+const RegisterPage = ({ location, history }) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const dispatch = useDispatch();
-  const userLogin = useSelector(state => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const userRegister = useSelector(state => state.userLogin);
+  const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
     if (userInfo) {
@@ -26,46 +29,68 @@ const LoginPage = ({ location, history }) => {
   const submitHandler = e => {
     e.preventDefault();
 
-    dispatch(login(email, password));
+    // Dispatch Register
+    if (confirmPassword !== password) {
+      setMessage("Password Does Not Matched");
+    } else {
+      dispatch(register(name, email, password));
+    }
   };
 
   return (
     <form className="form" onSubmit={submitHandler}>
-      <h1 className="form-title">SignIn</h1>
+      <h1 className="form-title">Sign Up</h1>
+      {message && <ErrorMessage>{message}</ErrorMessage>}
       {error && <ErrorMessage>{error}</ErrorMessage>}
       {loading && <WithSpinner />}
       {}
       <div className="form-box">
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label>Name</label>
+          <input
+            onChange={e => setName(e.target.value)}
+            type="name"
+            value={name}
+            placeholder="Enter Name"
+          />
+        </div>
+        <div className="form-group">
+          <label>Email</label>
           <input
             onChange={e => setEmail(e.target.value)}
-            name="email"
             type="email"
             value={email}
             placeholder="Enter Email Address"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label>Password</label>
           <input
             onChange={e => setPassword(e.target.value)}
-            name="password"
             type="password"
             value={password}
             placeholder="Enter Password"
           />
         </div>
         <div className="form-group">
+          <label>Confirm Password</label>
+          <input
+            onChange={e => setConfirmPassword(e.target.value)}
+            type="password"
+            value={confirmPassword}
+            placeholder="Confirm Password"
+          />
+        </div>
+        <div className="form-group">
           <button type="submit" className="form-btn">
-            SignIn
+            Register
           </button>
         </div>
 
         <div className="form-text">
-          New Customer ?
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-            Sign Up
+          Alread Register ?
+          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
+            Sign In
           </Link>
         </div>
       </div>
@@ -73,4 +98,4 @@ const LoginPage = ({ location, history }) => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

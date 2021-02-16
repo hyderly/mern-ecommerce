@@ -23,7 +23,8 @@ export const authUser = asyncHandler(async (req, res, next) => {
       token: generateToken(user._id),
     });
   } else {
-    return next(new ErrorResponse("Invalid mail or password", 401));
+    res.status(401);
+    throw new Error("Invalid mail or password");
   }
 });
 
@@ -54,7 +55,8 @@ export const registerUser = asyncHandler(async (req, res, next) => {
       token: generateToken(user._id),
     });
   } else {
-    return next(new ErrorResponse("Invalid mail or password", 400));
+    res.status(400);
+    throw new Error("Invalid mail or password");
   }
 });
 
@@ -72,6 +74,7 @@ export const getUserProfile = asyncHandler(async (req, res, next) => {
       isAdmin: user.isAdmin,
     });
   } else {
-    return next(new ErrorResponse("Invalid mail or password", 401));
+    res.status(401);
+    throw new Error("User not found");
   }
 });
