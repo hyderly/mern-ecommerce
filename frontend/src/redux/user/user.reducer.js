@@ -1,4 +1,8 @@
-import { UserLoginTypes, UserRegisterTypes } from "./user.types";
+import {
+  UserLoginTypes,
+  UserRegisterTypes,
+  UserDetailsTypes,
+} from "./user.types";
 
 export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
@@ -36,6 +40,29 @@ export const userRegisterReducer = (state = {}, action) => {
       };
     case UserRegisterTypes.USER_REGISTER_FAIL:
       return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const userDetailsReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case UserDetailsTypes.USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UserDetailsTypes.USER_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        payload: action.payload,
+      };
+    case UserDetailsTypes.USER_DETAILS_FAIL:
+      return {
+        ...state,
         loading: false,
         error: action.payload,
       };
