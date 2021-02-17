@@ -85,7 +85,7 @@ export const register = (name, email, password) => async dispatch => {
   }
 };
 
-export const userDetails = id => async (dispatch, getState) => {
+export const getUserDetails = id => async (dispatch, getState) => {
   const {
     userLogin: { userInfo },
   } = getState();
@@ -98,7 +98,7 @@ export const userDetails = id => async (dispatch, getState) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Autherization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 

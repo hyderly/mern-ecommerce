@@ -45,6 +45,13 @@ a {
 
 .drop-down-title {
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.drop-down-title i {
+  margin-left: 5px;
 }
 
 .drop-down-title:hover {

@@ -17,12 +17,13 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
       req.user = await User.findById(decodedToken.id).select("-password");
       next();
     } catch (error) {
-      console.error(error);
-      return next(new ErrorResponse("Invalid Token", 401));
+      res.status(401);
+      throw new Error("Invalid Token");
     }
   }
 
   if (!token) {
-    return next(new ErrorResponse("Invalid Request", 401));
+    res.status(401);
+    throw new Error("Invalid Request");
   }
 });
