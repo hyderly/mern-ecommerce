@@ -7,7 +7,7 @@ import { addToCart, removeFromCart } from "../../redux/cart/cart.actions";
 
 import "./cart.styles.css";
 
-const Cart = ({ match, location }) => {
+const Cart = ({ match, location, history }) => {
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector(state => state.cart);
@@ -25,8 +25,15 @@ const Cart = ({ match, location }) => {
     dispatch(removeFromCart(id));
   };
 
+  const checkoutHandler = () => {
+    history.push("/login?redirect=shipping");
+  };
+
   return (
     <div className="Cart">
+      <Link to="/" className="product-btn">
+        &#10094; Back to shop
+      </Link>
       <h1 className="cart-title">Shopping Cart</h1>
       <div className="cart-box">
         <div className="cart-items">
@@ -84,6 +91,14 @@ const Cart = ({ match, location }) => {
               .reduce((acc, item) => acc + item.qty * item.price, 0)
               .toFixed(2)}
           </h3>
+          <button
+            type="button"
+            disabled={cartItems === 0}
+            onClick={checkoutHandler}
+            className="form-btn"
+          >
+            Procced To Checkout
+          </button>
         </div>
       </div>
     </div>

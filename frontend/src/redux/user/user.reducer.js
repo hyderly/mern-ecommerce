@@ -82,7 +82,7 @@ export const updateProfileReducer = (state = {}, action) => {
       return {
         loading: false,
         success: true,
-        updateInfo: action.payload,
+        userInfo: action.payload,
       };
     case UpdateProfileTypes.USER_UPDATE_PROFILE_FAIL:
       return {

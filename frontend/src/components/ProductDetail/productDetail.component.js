@@ -33,7 +33,7 @@ const ProductDetail = ({ history, match }) => {
   return (
     <>
       <Link to="/" className="product-btn">
-        &#10094; Go Back
+        &#10094; Back to shop
       </Link>
       {loading ? (
         <WithSpinner />

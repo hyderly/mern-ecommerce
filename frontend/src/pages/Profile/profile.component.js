@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
-import { getUserDetails } from "../../redux/user/user.actions";
+import {
+  getUserDetails,
+  updateUserProfile,
+} from "../../redux/user/user.actions";
 
 import "./profile.styles.css";
 
@@ -23,6 +26,9 @@ const ProfilePage = ({ location, history }) => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userUpdateProfile = useSelector(state => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -39,9 +45,10 @@ const ProfilePage = ({ location, history }) => {
   const submitHandler = e => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage("Password Does Not Matched");
+      setMessage("Confirm Password not matched");
     } else {
-      // Dispatch Action
+      // Dispatch Profile Update Action
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
   };
 
@@ -51,8 +58,8 @@ const ProfilePage = ({ location, history }) => {
         <h1 className="form-title">User Profile</h1>
         {message && <ErrorMessage>{message}</ErrorMessage>}
         {error && <ErrorMessage>{error}</ErrorMessage>}
+        {success && <ErrorMessage>Profile Updated</ErrorMessage>}
         {loading && <WithSpinner />}
-        {}
         <div className="form-box">
           <div className="form-group">
             <label>Name</label>
