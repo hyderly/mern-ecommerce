@@ -1,0 +1,25 @@
+.stepper-box {
+  height: 80px;
+  width: 30vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepper-item {
+  font-size: 18px;
+  margin-right: 20px !important;
+  background-color: #eee;
+  padding: 10px 20px;
+}
+
+.stepper-link {
+  color: #222;
+  font-weight: bold;
+  background-color: ;
+}
+
+.stepper-link-disable {
+  color: #000;
+}

@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
-
-import ErrorResponse from "../utils/errorResponse.js";
 import User from "../models/User.js";
 
 export const protectRoute = asyncHandler(async (req, res, next) => {
