@@ -7,12 +7,12 @@ const CheckOutStepper = ({ step1, step2, step3, step4 }) => {
     <div className="stepper-box">
       <div className="stepper-item">
         {step1 ? (
-          <Link to="/signin" className="stepper-link">
-            SignIn
+          <Link to="/login" className="stepper-link">
+            Login
           </Link>
         ) : (
-          <Link to="/signin" className="stepper-link-disable">
-            SignIn
+          <Link to="/login" className="stepper-link-disable">
+            Login
           </Link>
         )}
       </div>
