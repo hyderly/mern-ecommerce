@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CheckOutStepper from "../../components/CheckoutStepper/checkoutStepper.component";
@@ -7,6 +7,7 @@ import { saveShippingAddress } from "../../redux/cart/cart.actions";
 
 const ShippingPage = ({ history }) => {
   const { shippingAddress } = useSelector(state => state.cart);
+  const { userInfo } = useSelector(state => state.userLogin);
 
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
@@ -14,6 +15,12 @@ const ShippingPage = ({ history }) => {
   const [country, setCountry] = useState(shippingAddress.country);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push("/login");
+    }
+  });
 
   const submitHandler = e => {
     e.preventDefault();

@@ -88,7 +88,7 @@ const RegisterPage = ({ location, history }) => {
         </div>
 
         <div className="form-text">
-          Alread Register ?
+          Already Register ?
           <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
             Sign In
           </Link>
