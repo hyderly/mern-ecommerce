@@ -54,11 +54,13 @@ const ProfilePage = ({ location, history }) => {
 
   return (
     <div className="profile-page">
-      <form className="profile-form" onSubmit={submitHandler}>
-        <h1 className="form-title">User Profile</h1>
-        {message && <ErrorMessage>{message}</ErrorMessage>}
+      {message && <ErrorMessage>{message}</ErrorMessage>}
         {error && <ErrorMessage>{error}</ErrorMessage>}
         {success && <ErrorMessage>Profile Updated</ErrorMessage>}
+      <form className="profile-form" onSubmit={submitHandler}>
+      
+        <h1 className="form-title">User Profile</h1>
+        
         {loading && <WithSpinner />}
         <div className="form-box">
           <div className="form-group">

@@ -1,4 +1,4 @@
-import ErrorResponse from "../utils/errorResponse.js";
+
 import generateToken from "../utils/generateToken.js";
 
 import asyncHandler from "../middlewares/async.js";
@@ -37,7 +37,8 @@ export const registerUser = asyncHandler(async (req, res, next) => {
   const existsUser = await User.findOne({ email: email });
 
   if (existsUser) {
-    return next(new ErrorResponse("User already exists", 400));
+    res.status(400);
+    throw new Error("User already exists");
   }
 
   const user = await User.create({

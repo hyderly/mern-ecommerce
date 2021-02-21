@@ -31,10 +31,7 @@ export const login = (email, password) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UserLoginTypes.USER_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response.data.error
     });
   }
 };
@@ -78,10 +75,7 @@ export const register = (name, email, password) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UserRegisterTypes.USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response.data.error
     });
   }
 };
@@ -112,10 +106,7 @@ export const getUserDetails = id => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UserDetailsTypes.USER_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response.data.error
     });
   }
 };
@@ -146,10 +137,7 @@ export const updateUserProfile = user => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UpdateProfileTypes.USER_UPDATE_PROFILE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response.data.error
     });
   }
 };

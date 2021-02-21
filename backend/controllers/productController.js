@@ -1,4 +1,4 @@
-import ErrorResponse from "../utils/errorResponse.js";
+
 
 import asyncHandler from "../middlewares/async.js";
 
@@ -10,8 +10,15 @@ import Product from "../models/Product.js";
 // @access public
 
 export const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.status(200).json(products);
+  
+  try {
+    const products = await Product.find({});
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400);
+    throw new Error('Products Not Found');
+  }
+  
 });
 
 // @desc Fetch single products
@@ -23,8 +30,8 @@ export const getProductById = asyncHandler(async (req, res) => {
   if (product) {
     res.status(200).json(product);
   } else {
-    return next(
-      new ErrorResponse(`Product not found with id ${req.params.id}`, 400)
-    );
+    res.status(400);
+    throw new Error(`Product not found with id ${req.params.id}`)
+    
   }
 });
