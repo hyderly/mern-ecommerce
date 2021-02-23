@@ -15,14 +15,15 @@ const PlaceOrderPage = ({ history }) => {
   });
 
   return (
-    <div class="place-order-page">
-      <CheckOutStepper step1 step2 step3 step4 />
-      <div className="overview-box-1">
-        <div className="overview-address">
-            <h2 className="overview-title"
-        </div>
-      </div>
-    </div>
+    <h1>hello</h1>
+    // <div class="place-order-page">
+    //   <CheckOutStepper step1 step2 step3 step4 />
+    //   <div className="overview-box-1">
+    //     <div className="overview-address">
+    //         <h2 className="overview-title"
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 
