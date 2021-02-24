@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema(
         qty: { type: Number, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
-        name: {
+        product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: "Product",
@@ -23,7 +23,7 @@ const orderSchema = new mongoose.Schema(
     shippingAddress: {
       address: { type: String, required: true },
       city: { type: String, required: true },
-      postalcode: { type: String, required: true },
+      postalCode: { type: String, required: true },
       country: { type: String, required: true },
     },
     paymentMethod: {
@@ -66,20 +66,6 @@ const orderSchema = new mongoose.Schema(
     },
     deliveredAt: {
       type: Date,
-    },
-    email: {
-      type: "String",
-      required: [true, "Please add user email"],
-      unique: true,
-    },
-    password: {
-      type: "String",
-      required: [true, "Please add user password"],
-    },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
     },
   },
   {

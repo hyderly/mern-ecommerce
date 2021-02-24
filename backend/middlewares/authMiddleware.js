@@ -22,6 +22,6 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
 
   if (!token) {
     res.status(401);
-    throw new Error("Invalid Request");
+    throw new Error("No Token Found");
   }
 });

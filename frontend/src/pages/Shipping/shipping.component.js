@@ -73,7 +73,7 @@ const ShippingPage = ({ history }) => {
 
           <div className="form-group">
             <button type="submit" className="form-btn">
-              COntinue To Payments
+              Continue To Payments
             </button>
           </div>
         </div>

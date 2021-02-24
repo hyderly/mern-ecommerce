@@ -15,10 +15,7 @@ export const detailProduct = id => async dispatch => {
   } catch (error) {
     dispatch({
       type: ProductDetailActionTypes.PRODUCT_DETAIL_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response.data.error
     });
   }
 };

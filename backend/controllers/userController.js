@@ -1,4 +1,4 @@
-import ErrorResponse from "../utils/errorResponse.js";
+
 import generateToken from "../utils/generateToken.js";
 
 import asyncHandler from "../middlewares/async.js";
@@ -9,7 +9,7 @@ import User from "../models/User.js";
 // @desc  Authenticate user & get token
 // @route POST /api/users/login
 // @access public
-export const authUser = asyncHandler(async (req, res, next) => {
+export const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -37,7 +37,8 @@ export const registerUser = asyncHandler(async (req, res, next) => {
   const existsUser = await User.findOne({ email: email });
 
   if (existsUser) {
-    return next(new ErrorResponse("User already exists", 400));
+    res.status(400);
+    throw new Error("User already exists");
   }
 
   const user = await User.create({
