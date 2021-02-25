@@ -3,83 +3,49 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import withSpinner from "../../components/WithSpinner/with-spinner.component";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
-import CheckOutStepper from "../../components/CheckoutStepper/checkoutStepper.component";
 
-import { createOrder } from "../../redux/order/order.actions";
+import { getOrderDetails } from "../../redux/order/order.actions";
 
-import "./placeorder.styles.css";
-
-const PlaceOrderPage = ({ history }) => {
+const PlaceOrderPage = ({ match }) => {
+  const orderId = match.params.id;
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart);
-  const { shippingAddress, cartItems } = cart;
-
-  // Calculations
-  cart.totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
-  cart.itemsTotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
-  cart.shippingPrice = cart.itemsTotal > 100 ? 0 : 100;
-  cart.tax = +(cart.itemsTotal * 0.16);
-  cart.subTotal = cart.itemsTotal + cart.shippingPrice + cart.tax;
-
-  const orderCreate = useSelector(state => state.orderCreate);
-  const { order, success, error, loading } = orderCreate;
-
-  const placeOrder = () => {
-    console.log("Ordered");
-
-    dispatch(
-      createOrder({
-        orderItems: cart.cartItems,
-        shippingAddress: shippingAddress,
-        paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsTotal,
-        taxPrice: cart.tax,
-        shippingPrice: cart.shippingPrice,
-        totalPrice: cart.subTotal,
-      })
-    );
-  };
+  const orderDetails = useSelector(state => state.orderDetails);
+  const { order, error, loading } = orderDetails;
 
   useEffect(() => {
-    if (cart.paymentMethod === null) {
-      history.push("/payment");
-    }
+    dispatch(getOrderDetails(orderId));
+  });
 
-    if (success) {
-      history.push(`/order/${order._id}`);
-    }
-
-    // eslint-disable-next-line
-  }, [history, success, cart.paymentMethod]);
-
-  return (
+  return loading ? (
+    <withSpinner />
+  ) : error ? (
+    <ErrorMessage>{error}</ErrorMessage>
+  ) : (
     <>
-      <CheckOutStepper step1 step2 step3 step4 />
       <div class="place-order-page">
+        <h1>Order {order.order._id}</h1>
         <div className="overview-box-1">
           <div className="overview-address overview-item">
             <h2>Shipping</h2>
             <p>
               <span>Address:</span>
-              {shippingAddress.address}, {shippingAddress.city}{" "}
-              {shippingAddress.postalCode}, {shippingAddress.country}
+              {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
+              {order.shippingAddress.postalCode},{" "}
+              {order.shippingAddress.country}
             </p>
           </div>
           <div className="overview-payment overview-item">
             <h2>Payment Method</h2>
             <p>
               <span>Method:</span>
-              {cart.paymentMethod}
+              {order.paymentMethod}
             </p>
           </div>
 
           <div className="overview-cart overview-item">
             <h2>Order Items</h2>
             <div className="overview-car-box">
-              {cartItems.length === 0 ? (
+              {order.orderItems.length === 0 ? (
                 <ErrorMessage>
                   Cart is Empty{" "}
                   <Link to="/" style={{ textDecoration: "underline" }}>
@@ -87,7 +53,7 @@ const PlaceOrderPage = ({ history }) => {
                   </Link>
                 </ErrorMessage>
               ) : (
-                cartItems.map(item => (
+                order.orderItems.map(item => (
                   <div className="cart-item" key={item.product}>
                     <img
                       className="item-image"
@@ -112,14 +78,11 @@ const PlaceOrderPage = ({ history }) => {
         <div className="overview-box-2">
           <div className="overview-summary">
             <h2>Order Summary</h2>
-            <div className="summery-item">
-              <span className="summery-item-label">Total QTY</span>
-              <span className="summery-item-text">{cart.totalItems}</span>
-            </div>
+            
             <div className="summery-item">
               <span className="summery-item-label">Items Total</span>
               <span className="summery-item-text">
-                ${cart.itemsTotal.toFixed(2)}
+                ${order.itemsTotal.toFixed(2)}
               </span>
             </div>
             <div className="summery-item">

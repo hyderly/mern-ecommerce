@@ -1,11 +1,9 @@
 import asyncHandler from "../middlewares/async.js";
-
-// Product Model
-import Order from "../models/Order.js";
+import Order from "../models/Order.js"; // Product Model
 
 // @desc Create Order
-// @route Post /api/orders
-// @access public
+// @route POST /api/orders
+// @access private
 export const createOrder = asyncHandler(async (req, res) => {
   const {
     orderItems,
@@ -35,5 +33,22 @@ export const createOrder = asyncHandler(async (req, res) => {
     const createOrder = await order.save();
 
     res.status(201).json(createOrder);
+  }
+});
+
+// @desc Get Order by ID
+// @route GET /api/orders/:id
+// @access private
+export const getOrderById = asyncHandler(async (req, res) => {
+  const orders = await Order.findById(req.params.id).populate(
+    "User",
+    "name email"
+  );
+
+  if (orders) {
+    res.status(200).json(orders);
+  } else {
+    res.status(404);
+    throw new Error("Order Not Found");
   }
 });
