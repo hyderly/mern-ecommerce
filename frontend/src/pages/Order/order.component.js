@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import withSpinner from "../../components/WithSpinner/with-spinner.component";
+import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 
 import { getOrderDetails } from "../../redux/order/order.actions";
@@ -9,19 +9,25 @@ import { getOrderDetails } from "../../redux/order/order.actions";
 const OrderPage = ({ match }) => {
   const orderId = match.params.id;
   const dispatch = useDispatch();
+
   const orderDetails = useSelector(state => state.orderDetails);
   const { order, error, loading } = orderDetails;
+  
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
     console.log(order);
-  });
+  }, []);
+
+  
 
   return (
+    loading ? <WithSpinner/> : error ? <ErrorMessage>{error}</ErrorMessage> : (
+
     <>
       <div class="place-order-page">
-        <h1>Order {order.order._id}</h1>
         <div className="overview-box-1">
+          <h1>Order {order._id}</h1>
           <div className="overview-address overview-item">
             <h2>Shipping</h2>
             <p>
@@ -79,7 +85,7 @@ const OrderPage = ({ match }) => {
             <div className="summery-item">
               <span className="summery-item-label">Items Total</span>
               <span className="summery-item-text">
-                ${order.itemsTotal.toFixed(2)}
+                ${order.itemsPrice.toFixed(2)}
               </span>
             </div>
             <div className="summery-item">
@@ -90,18 +96,19 @@ const OrderPage = ({ match }) => {
             </div>
             <div className="summery-item">
               <span className="summery-item-label">Tax</span>
-              <span className="summery-item-text">${order.tax.toFixed(2)}</span>
+              <span className="summery-item-text">${order.taxPrice.toFixed(2)}</span>
             </div>
             <div className="summery-item">
               <span className="summery-item-label">Sub Total</span>
               <span className="summery-item-text">
-                ${order.subTotal.toFixed(2)}
+                ${order.totalPrice.toFixed(2)}
               </span>
             </div>
           </div>
         </div>
       </div>
     </>
+    )
   );
 };
 

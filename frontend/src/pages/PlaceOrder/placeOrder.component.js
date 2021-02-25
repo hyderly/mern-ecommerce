@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import withSpinner from "../../components/WithSpinner/with-spinner.component";
+import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import CheckOutStepper from "../../components/CheckoutStepper/checkoutStepper.component";
 
@@ -56,7 +56,7 @@ const PlaceOrderPage = ({ history }) => {
   return (
     <>
       <CheckOutStepper step1 step2 step3 step4 />
-      <div class="place-order-page">
+      <div className="place-order-page">
         <div className="overview-box-1">
           <div className="overview-address overview-item">
             <h2>Shipping</h2>
@@ -137,7 +137,7 @@ const PlaceOrderPage = ({ history }) => {
               </span>
             </div>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            {loading && <withSpinner />}
+            {loading && <WithSpinner />}
             <div className="summery-item">
               <button
                 type="button"

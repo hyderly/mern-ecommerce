@@ -46,7 +46,7 @@ const rootReducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdateProfile: updateProfileReducer,
   orderCreate: orderCreateReducer,
-  orderDetails: orderDetailsReducer,
+  orderDetails: orderDetailsReducer
 });
 
 const initialState = {

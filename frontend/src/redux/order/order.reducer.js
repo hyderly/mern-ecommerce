@@ -37,13 +37,11 @@ export const orderDetailsReducer = (
       };
     case OrderDetailsTypes.ORDER_DETAILS_SUCCESS:
       return {
-        ...state,
         order: action.payload,
         loading: false,
       };
     case OrderDetailsTypes.ORDER_DETAILS_FAIL:
       return {
-        ...state,
         loading: false,
         error: action.payload,
       };
