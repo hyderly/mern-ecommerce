@@ -28,8 +28,6 @@ const PlaceOrderPage = ({ history }) => {
   const { order, success, error, loading } = orderCreate;
 
   const placeOrder = () => {
-    console.log("Ordered");
-
     dispatch(
       createOrder({
         orderItems: cart.cartItems,

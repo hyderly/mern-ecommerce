@@ -6,7 +6,7 @@ import ErrorMessage from "../../components/ErrorMessage/error-message.component"
 
 import { getOrderDetails } from "../../redux/order/order.actions";
 
-const PlaceOrderPage = ({ match }) => {
+const OrderPage = ({ match }) => {
   const orderId = match.params.id;
   const dispatch = useDispatch();
   const orderDetails = useSelector(state => state.orderDetails);
@@ -14,13 +14,10 @@ const PlaceOrderPage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
+    console.log(order);
   });
 
-  return loading ? (
-    <withSpinner />
-  ) : error ? (
-    <ErrorMessage>{error}</ErrorMessage>
-  ) : (
+  return (
     <>
       <div class="place-order-page">
         <h1>Order {order.order._id}</h1>
@@ -47,7 +44,7 @@ const PlaceOrderPage = ({ match }) => {
             <div className="overview-car-box">
               {order.orderItems.length === 0 ? (
                 <ErrorMessage>
-                  Cart is Empty{" "}
+                  Order is Empty{" "}
                   <Link to="/" style={{ textDecoration: "underline" }}>
                     Shop Now
                   </Link>
@@ -78,7 +75,7 @@ const PlaceOrderPage = ({ match }) => {
         <div className="overview-box-2">
           <div className="overview-summary">
             <h2>Order Summary</h2>
-            
+
             <div className="summery-item">
               <span className="summery-item-label">Items Total</span>
               <span className="summery-item-text">
@@ -88,30 +85,18 @@ const PlaceOrderPage = ({ match }) => {
             <div className="summery-item">
               <span className="summery-item-label">Shipping</span>
               <span className="summery-item-text">
-                ${cart.shippingPrice.toFixed(2)}
+                ${order.shippingPrice.toFixed(2)}
               </span>
             </div>
             <div className="summery-item">
               <span className="summery-item-label">Tax</span>
-              <span className="summery-item-text">${cart.tax.toFixed(2)}</span>
+              <span className="summery-item-text">${order.tax.toFixed(2)}</span>
             </div>
             <div className="summery-item">
               <span className="summery-item-label">Sub Total</span>
               <span className="summery-item-text">
-                ${cart.subTotal.toFixed(2)}
+                ${order.subTotal.toFixed(2)}
               </span>
-            </div>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-            {loading && <withSpinner />}
-            <div className="summery-item">
-              <button
-                type="button"
-                disabled={cartItems === 0}
-                onClick={placeOrder}
-                className="form-btn"
-              >
-                Place Order
-              </button>
             </div>
           </div>
         </div>
@@ -120,4 +105,4 @@ const PlaceOrderPage = ({ match }) => {
   );
 };
 
-export default PlaceOrderPage;
+export default OrderPage;

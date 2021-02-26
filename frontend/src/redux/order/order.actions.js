@@ -27,7 +27,7 @@ export const createOrder = order => async (dispatch, getState) => {
     });
   } catch (error) {
     dispatch({
-      type: OrderCreateTypes.ORDER_DETAILS_FAIL,
+      type: OrderCreateTypes.ORDER_CREATE_FAIL,
       payload: error.response.data.error,
     });
   }
@@ -57,7 +57,7 @@ export const getOrderDetails = id => async (dispatch, getState) => {
     });
   } catch (error) {
     dispatch({
-      type: OrderDetailsTypes.ORDER_CREATE_FAIL,
+      type: OrderDetailsTypes.ORDER_DETAILS_FAIL,
       payload: error.response.data.error,
     });
   }
