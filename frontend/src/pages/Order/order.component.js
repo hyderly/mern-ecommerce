@@ -12,18 +12,17 @@ const OrderPage = ({ match }) => {
 
   const orderDetails = useSelector(state => state.orderDetails);
   const { order, error, loading } = orderDetails;
-  
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
     console.log(order);
-  }, []);
+  }, [dispatch, orderId]);
 
-  
-
-  return (
-    loading ? <WithSpinner/> : error ? <ErrorMessage>{error}</ErrorMessage> : (
-
+  return loading ? (
+    <WithSpinner />
+  ) : error ? (
+    <ErrorMessage>{error}</ErrorMessage>
+  ) : (
     <>
       <div class="place-order-page">
         <div className="overview-box-1">
@@ -31,11 +30,30 @@ const OrderPage = ({ match }) => {
           <div className="overview-address overview-item">
             <h2>Shipping</h2>
             <p>
+              <span>Name:</span> {order.user.name}
+            </p>
+
+            <p>
+              <span>Email: </span>
+              <a style={{ color: "#000" }} href={`mailto:${order.user.email}`}>
+                {order.user.email}
+              </a>
+            </p>
+
+            <p>
               <span>Address:</span>
               {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
               {order.shippingAddress.postalCode},{" "}
               {order.shippingAddress.country}
             </p>
+
+            {order.isDelivered ? (
+              <ErrorMessage styleType="success">
+                {order.deliveredAt}
+              </ErrorMessage>
+            ) : (
+              <ErrorMessage styleType="danger">Not Delivered </ErrorMessage>
+            )}
           </div>
           <div className="overview-payment overview-item">
             <h2>Payment Method</h2>
@@ -43,6 +61,11 @@ const OrderPage = ({ match }) => {
               <span>Method:</span>
               {order.paymentMethod}
             </p>
+            {order.isPaid ? (
+              <ErrorMessage styleType="success">{order.paidAt}</ErrorMessage>
+            ) : (
+              <ErrorMessage styleType="danger">Not Paid </ErrorMessage>
+            )}
           </div>
 
           <div className="overview-cart overview-item">
@@ -96,7 +119,9 @@ const OrderPage = ({ match }) => {
             </div>
             <div className="summery-item">
               <span className="summery-item-label">Tax</span>
-              <span className="summery-item-text">${order.taxPrice.toFixed(2)}</span>
+              <span className="summery-item-text">
+                ${order.taxPrice.toFixed(2)}
+              </span>
             </div>
             <div className="summery-item">
               <span className="summery-item-label">Sub Total</span>
@@ -108,7 +133,6 @@ const OrderPage = ({ match }) => {
         </div>
       </div>
     </>
-    )
   );
 };
 
