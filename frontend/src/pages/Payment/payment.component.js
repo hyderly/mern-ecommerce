@@ -14,7 +14,7 @@ const PaymentPage = ({ history }) => {
     }
   });
 
-  const [paymentMethod, setPaymentMethod] = useState("PayPal");
+  const [paymentMethod, setPaymentMethod] = useState("Card");
 
   const dispatch = useDispatch();
 
@@ -34,13 +34,13 @@ const PaymentPage = ({ history }) => {
           <div className="form-group-radio">
             <input
               onChange={e => setPaymentMethod(e.target.value)}
-              id="PayPal"
+              id="Card"
               name="paymentmethod"
               type="radio"
-              value="PayPal"
+              value="Card"
               checked
             />
-            <label htmlFor="PayPal">PayPal or Credit Card</label>
+            <label htmlFor="PayPal">Credit or Debit Card</label>
           </div>
 
           <div className="form-group">

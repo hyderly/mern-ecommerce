@@ -1,5 +1,12 @@
 .profile-page {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: start;
+}
+
+
+@media only screen and( max-width: 767px){
+  .profile-page{
+    flex-direction: column;
+  }
 }

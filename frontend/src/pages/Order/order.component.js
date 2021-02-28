@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 
-import { getOrderDetails } from "../../redux/order/order.actions";
+import { getOrderDetails, payOrder} from "../../redux/order/order.actions";
 
 const OrderPage = ({ match }) => {
   const orderId = match.params.id;
@@ -13,20 +13,30 @@ const OrderPage = ({ match }) => {
   const orderDetails = useSelector(state => state.orderDetails);
   const { order, error, loading } = orderDetails;
 
+  const orderPay = useSelector(state => state.orderPay);
+  const { success: successPay, loading: loadingPay, error: errorPay } = orderPay;
+
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
     console.log(order);
-  }, [dispatch, orderId]);
+  }, [dispatch, orderId, successPay]);
+
+  const submitPaymentHandler = () => {
+    if(!successPay){
+      dispatch(payOrder(orderId))
+    }
+  }
 
   return loading ? (
     <WithSpinner />
   ) : error ? (
-    <ErrorMessage>{error}</ErrorMessage>
+    <ErrorMessage styleType="danger">{error}</ErrorMessage>
   ) : (
     <>
-      <div class="place-order-page">
+      <div className="place-order-page">
         <div className="overview-box-1">
-          <h1>Order {order._id}</h1>
+          <h1>Order </h1>
+          <span>{order._id}</span>
           <div className="overview-address overview-item">
             <h2>Shipping</h2>
             <p>
@@ -129,6 +139,14 @@ const OrderPage = ({ match }) => {
                 ${order.totalPrice.toFixed(2)}
               </span>
             </div>
+            {errorPay ? <ErrorMessage styleType="danger">{errorPay}</ErrorMessage>: ''}
+            
+            <div className="summery-item">
+                {order.isPaid ? '': (
+                  <button  class="form-btn summery-item" onClick={submitPaymentHandler}>Pay now</button>
+                )}     
+            </div>
+            
           </div>
         </div>
       </div>

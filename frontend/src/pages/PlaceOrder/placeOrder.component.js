@@ -136,7 +136,7 @@ const PlaceOrderPage = ({ history }) => {
                 ${cart.subTotal.toFixed(2)}
               </span>
             </div>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {error && <ErrorMessage styleType='danger'>{error}</ErrorMessage>}
             {loading && <WithSpinner />}
             <div className="summery-item">
               <button

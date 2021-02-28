@@ -83,6 +83,12 @@ blue-2: #487eb0; */
   cursor: pointer;
 }
 
+button[disabled]{
+  background-color: #222;
+  color: #666666;
+  cursor: default !important;
+}
+
 .form-text a {
   color: #000;
   font-weight: bold;

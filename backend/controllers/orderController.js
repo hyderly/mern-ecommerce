@@ -62,12 +62,7 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
-    order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.payer.email_address,
-    };
+    
 
     const updatedOrder = await order.save();
 
@@ -77,3 +72,14 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
     throw new Error("Order Not Found");
   }
 });
+
+
+// @desc Get loggedIn user Orders
+// @route PUT /api/orders/myorders
+// @access private
+
+export const getMyOrders = asyncHandler(async(req, res) => {
+  const orders = await Order.find({user: req.user._id});
+  res.json(orders);
+})
+

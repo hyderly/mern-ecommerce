@@ -2,6 +2,7 @@ import {
   OrderCreateTypes,
   OrderDetailsTypes,
   OrderPayTypes,
+  OrderMyListTypes
 } from "./order.types";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -63,7 +64,7 @@ export const orderPayReducer = (state = {}, action) => {
     case OrderPayTypes.ORDER_PAY_SUCCESS:
       return {
         loading: false,
-        success: true,
+        success: action.payload
       };
     case OrderPayTypes.ORDER_PAY_FAIL:
       return {
@@ -71,7 +72,38 @@ export const orderPayReducer = (state = {}, action) => {
         error: action.payload,
       };
     case OrderPayTypes.ORDER_PAY_RESET:
-      return {};
+      return {}
+    
+    default:
+      return state;
+  }
+};
+
+
+export const orderMyListReducer = (
+  state = { orders: [] },
+  action
+) => {
+  switch (action.type) {
+    case OrderMyListTypes.ORDER_MY_LIST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case OrderMyListTypes.ORDER_MY_LIST_SUCCESS:
+      return {
+        orders : action.payload,
+        loading: false,
+      };
+    case OrderMyListTypes.ORDER_MY_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case OrderMyListTypes.ORDER_MY_LIST_RESET:
+      return {
+        orders: []
+      }
     default:
       return state;
   }

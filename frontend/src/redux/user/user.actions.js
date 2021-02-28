@@ -6,6 +6,8 @@ import {
   UpdateProfileTypes,
 } from "./user.types";
 
+import {OrderMyListTypes} from '../order/order.types';
+
 export const login = (email, password) => async dispatch => {
   try {
     dispatch({
@@ -41,6 +43,12 @@ export const logout = () => dispatch => {
   dispatch({
     type: UserLoginTypes.USER_LOGOUT,
   });
+  dispatch({
+    type: UserDetailsTypes.USER_DETAILS_RESET
+  });
+  dispatch({
+    type: OrderMyListTypes.ORDER_MY_LIST_RESET
+  })
 };
 
 export const register = (name, email, password) => async dispatch => {

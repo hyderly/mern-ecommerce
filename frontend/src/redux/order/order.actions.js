@@ -4,6 +4,7 @@ import {
   OrderCreateTypes,
   OrderDetailsTypes,
   OrderPayTypes,
+  OrderMyListTypes,
 } from "./order.types";
 
 export const createOrder = order => async (dispatch, getState) => {
@@ -67,13 +68,10 @@ export const getOrderDetails = id => async (dispatch, getState) => {
   }
 };
 
-export const payOrder = (orderId, paymentResult) => async (
-  dispatch,
-  getState
-) => {
+export const payOrder = (orderId, paymentResult) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: OrderPayTypes.ORDER_Pay_REQUEST,
+      type: OrderPayTypes.ORDER_PAY_REQUEST
     });
 
     const {
@@ -82,7 +80,7 @@ export const payOrder = (orderId, paymentResult) => async (
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -100,3 +98,35 @@ export const payOrder = (orderId, paymentResult) => async (
     });
   }
 };
+
+
+export const getMyOrderList =  () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: OrderMyListTypes.ORDER_MY_LIST_REQUEST
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+  
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const {data} = await axios.get('/api/orders/myorders', config);
+
+    dispatch({
+      type: OrderMyListTypes.ORDER_MY_LIST_SUCCESS,
+      payload: data
+    })
+    
+  } catch (error) {
+      dispatch({
+        type: OrderMyListTypes.ORDER_MY_LIST_FAIL,
+        payload: error.response?.data.error
+      })
+  }
+}
