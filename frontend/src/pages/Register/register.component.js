@@ -39,10 +39,10 @@ const RegisterPage = ({ location, history }) => {
 
   return (
     <form className="form" onSubmit={submitHandler}>
-      {message && <ErrorMessage>{message}</ErrorMessage>}
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {message && <ErrorMessage styleType="danger">{message}</ErrorMessage>}
+      {error && <ErrorMessage styleType="danger">{error}</ErrorMessage>}
       <h1 className="form-title">Sign Up</h1>
-      
+
       {loading && <WithSpinner />}
       {}
       <div className="form-box">

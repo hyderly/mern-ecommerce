@@ -38,7 +38,7 @@ const Cart = ({ match, location, history }) => {
       <div className="cart-box">
         <div className="cart-items">
           {cartItems.length === 0 ? (
-            <ErrorMessage>
+            <ErrorMessage styleType="danger">
               Cart is Empty{" "}
               <Link to="/" style={{ textDecoration: "underline" }}>
                 Shop Now

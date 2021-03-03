@@ -1,4 +1,3 @@
-
 import generateToken from "../utils/generateToken.js";
 
 import asyncHandler from "../middlewares/async.js";
@@ -106,5 +105,18 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
   } else {
     res.status(401);
     throw new Error("User not found");
+  }
+});
+
+// @desc  Get all users
+// @route GET /api/users
+// @access Private/Admin
+export const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  if (users) {
+    res.json(users);
+  } else {
+    res.status(401);
+    throw new Error("Users not found");
   }
 });

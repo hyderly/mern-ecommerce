@@ -7,12 +7,19 @@ import {
   registerUser,
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
 } from "../controllers/userController.js";
 
 // User protected route
-import { protectRoute } from "../middlewares/authMiddleware.js";
+import {
+  protectRoute,
+  adminProtectRoute,
+} from "../middlewares/authMiddleware.js";
 
-router.route("/").post(registerUser);
+router
+  .route("/")
+  .post(registerUser)
+  .get(protectRoute, adminProtectRoute, getAllUsers);
 router.route("/login").post(authUser);
 router
   .route("/profile")

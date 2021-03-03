@@ -31,7 +31,7 @@ const LoginPage = ({ location, history }) => {
 
   return (
     <form className="form" onSubmit={submitHandler}>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <ErrorMessage styleType="danger">{error}</ErrorMessage>}
       <h1 className="form-title">SignIn</h1>
       
       {loading && <WithSpinner />}

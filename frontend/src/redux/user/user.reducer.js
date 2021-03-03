@@ -3,6 +3,7 @@ import {
   UserRegisterTypes,
   UserDetailsTypes,
   UpdateProfileTypes,
+  UserListTypes,
 } from "./user.types";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -69,8 +70,8 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
       };
     case UserDetailsTypes.USER_DETAILS_RESET:
       return {
-        user: {}
-      }
+        user: {},
+      };
     default:
       return state;
   }
@@ -89,6 +90,27 @@ export const updateProfileReducer = (state = {}, action) => {
         userInfo: action.payload,
       };
     case UpdateProfileTypes.USER_UPDATE_PROFILE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const userListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case UserListTypes.USER_LIST_REQUEST:
+      return {
+        loading: true,
+      };
+    case UserListTypes.USER_LIST_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+    case UserListTypes.USER_LIST_FAIL:
       return {
         loading: false,
         error: action.payload,

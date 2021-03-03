@@ -4,9 +4,10 @@ import {
   UserRegisterTypes,
   UserDetailsTypes,
   UpdateProfileTypes,
+  UserListTypes,
 } from "./user.types";
 
-import {OrderMyListTypes} from '../order/order.types';
+import { OrderMyListTypes } from "../order/order.types";
 
 export const login = (email, password) => async dispatch => {
   try {
@@ -33,7 +34,7 @@ export const login = (email, password) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UserLoginTypes.USER_LOGIN_FAIL,
-      payload: error.response.data.error
+      payload: error.response.data.error,
     });
   }
 };
@@ -44,11 +45,11 @@ export const logout = () => dispatch => {
     type: UserLoginTypes.USER_LOGOUT,
   });
   dispatch({
-    type: UserDetailsTypes.USER_DETAILS_RESET
+    type: UserDetailsTypes.USER_DETAILS_RESET,
   });
   dispatch({
-    type: OrderMyListTypes.ORDER_MY_LIST_RESET
-  })
+    type: OrderMyListTypes.ORDER_MY_LIST_RESET,
+  });
 };
 
 export const register = (name, email, password) => async dispatch => {
@@ -83,7 +84,7 @@ export const register = (name, email, password) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UserRegisterTypes.USER_REGISTER_FAIL,
-      payload: error.response.data.error
+      payload: error.response.data.error,
     });
   }
 };
@@ -114,7 +115,7 @@ export const getUserDetails = id => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UserDetailsTypes.USER_DETAILS_FAIL,
-      payload: error.response.data.error
+      payload: error.response.data.error,
     });
   }
 };
@@ -145,7 +146,37 @@ export const updateUserProfile = user => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UpdateProfileTypes.USER_UPDATE_PROFILE_FAIL,
-      payload: error.response.data.error
+      payload: error.response.data.error,
+    });
+  }
+};
+
+export const getUserList = () => async (dispatch, getState) => {
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
+  try {
+    dispatch({
+      type: UserListTypes.USER_LIST_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/users", config);
+
+    dispatch({
+      type: UserListTypes.USER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UserListTypes.USER_LIST_FAIL,
+      payload: error.response.data.error,
     });
   }
 };

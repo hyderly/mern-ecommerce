@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
@@ -11,7 +10,7 @@ import {
   updateUserProfile,
 } from "../../redux/user/user.actions";
 
-import {getMyOrderList} from '../../redux/order/order.actions';
+import { getMyOrderList } from "../../redux/order/order.actions";
 
 import "./profile.styles.css";
 
@@ -42,7 +41,7 @@ const ProfilePage = ({ location, history }) => {
     } else {
       if (!user.name) {
         dispatch(getUserDetails("profile"));
-        dispatch(getMyOrderList())
+        dispatch(getMyOrderList());
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -62,13 +61,14 @@ const ProfilePage = ({ location, history }) => {
 
   return (
     <div className="profile-page">
-      {message && <ErrorMessage>{message}</ErrorMessage>}
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        {success && <ErrorMessage>Profile Updated</ErrorMessage>}
       <form className="profile-form" onSubmit={submitHandler}>
-      
+        {message && <ErrorMessage styleType="danger">{message}</ErrorMessage>}
+        {error && <ErrorMessage styleType="danger">{error}</ErrorMessage>}
+        {success && (
+          <ErrorMessage styleType="success">Profile Updated</ErrorMessage>
+        )}
         <h1 className="form-title">User Profile</h1>
-        
+
         {loading && <WithSpinner />}
         <div className="form-box">
           <div className="form-group">
@@ -115,10 +115,12 @@ const ProfilePage = ({ location, history }) => {
         </div>
       </form>
       <div class="orders">
-      {errorOrder && <ErrorMessage styleType='danger'>{errorOrder}</ErrorMessage>}
-        {loadingOrder && <WithSpinner/>}
-      <h1 >My Orders</h1>
-        
+        {errorOrder && (
+          <ErrorMessage styleType="danger">{errorOrder}</ErrorMessage>
+        )}
+        {loadingOrder && <WithSpinner />}
+        <h1>My Orders</h1>
+
         <table striped bordered hover className="table-sm">
           <thead>
             <tr>
@@ -136,8 +138,20 @@ const ProfilePage = ({ location, history }) => {
                 <td>{order._id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>{order.totalPrice}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : <i className="fas fa-times" style={{color: 'red'}}></i>}</td>
-                <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : <i className="fas fa-times" style={{color: 'red'}}></i>}</td>
+                <td>
+                  {order.isPaid ? (
+                    order.paidAt.substring(0, 10)
+                  ) : (
+                    <i className="fas fa-times" style={{ color: "red" }}></i>
+                  )}
+                </td>
+                <td>
+                  {order.isDelivered ? (
+                    order.deliveredAt.substring(0, 10)
+                  ) : (
+                    <i className="fas fa-times" style={{ color: "red" }}></i>
+                  )}
+                </td>
                 <td>
                   <Link to={`order/${order._id}`}>
                     <button class="">Details</button>
