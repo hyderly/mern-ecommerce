@@ -143,7 +143,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
 // @route GET /api/users/:id
 // @access Private/Admin
 export const getUserById = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id).select('-password');
+  const user = await User.findById(req.params.id).select("-password");
   if (user) {
     res.json(user);
   } else {
