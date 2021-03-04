@@ -120,3 +120,21 @@ export const getAllUsers = asyncHandler(async (req, res) => {
     throw new Error("Users not found");
   }
 });
+
+// @desc  Detele User
+// @route DELETE /api/users/:id
+// @access Private/Admin
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user.isAdmin) {
+    await user.remove();
+    res.json(`${user.name} User removed`);
+  }
+  if (user.isAdmin) {
+    res.status(404);
+    throw new Error("User admin Cannot be deleted");
+  } else {
+    res.status(404);
+    throw new Error("User is Admin or User not found");
+  }
+});

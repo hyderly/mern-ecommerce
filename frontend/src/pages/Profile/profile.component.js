@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Button, Table } from "react-bootstrap";
+
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
@@ -47,7 +49,7 @@ const ProfilePage = ({ location, history }) => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, user, orders]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -121,7 +123,7 @@ const ProfilePage = ({ location, history }) => {
         {loadingOrder && <WithSpinner />}
         <h1>My Orders</h1>
 
-        <table striped bordered hover className="table-sm">
+        <Table striped bordered hover className="table-sm">
           <thead>
             <tr>
               <th>ID</th>
@@ -154,13 +156,13 @@ const ProfilePage = ({ location, history }) => {
                 </td>
                 <td>
                   <Link to={`order/${order._id}`}>
-                    <button class="">Details</button>
+                    <Button class="btn-sm">Details</Button>
                   </Link>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

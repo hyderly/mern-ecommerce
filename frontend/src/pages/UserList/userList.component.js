@@ -6,23 +6,46 @@ import { Button, Table } from "react-bootstrap";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
-import { getUserList } from "../../redux/user/user.actions";
+import { getUserList, deleteUserByAdmin } from "../../redux/user/user.actions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const UserList = () => {
+const UserList = ({ history }) => {
   const dispatch = useDispatch();
+
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
 
   const userList = useSelector(state => state.userList);
   const { loading, error, users } = userList;
 
+  const deleteUser = useSelector(state => state.deleteUser);
+  const {
+    loading: loadingDeleteUser,
+    error: errorDeleteUser,
+    success: successDeleteUser,
+  } = deleteUser;
+
   useEffect(() => {
-    dispatch(getUserList());
-  }, [dispatch]);
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(getUserList());
+    } else {
+      history.push("/login");
+    }
+  }, [dispatch, history, userInfo, successDeleteUser]);
+
+  const deleteUserHanlder = id => {
+    if (window.confirm("Are you sure you want to delete")) {
+      dispatch(deleteUserByAdmin(id));
+    }
+  };
 
   return (
     <>
       <h1>Users</h1>
+      {errorDeleteUser && (
+        <ErrorMessage styleType="danger">{errorDeleteUser}</ErrorMessage>
+      )}
       {loading ? (
         <WithSpinner />
       ) : error ? (
@@ -42,9 +65,14 @@ const UserList = () => {
             {users.map(user => (
               <tr key={user._id}>
                 <td>{user._id}</td>
-                <td>{user.name}</td>
                 <td>
-                  <a href={`mailto:${user.mail}`}>{user.mail}</a>
+                  {user.name}
+                  {user.name === userInfo.name && (
+                    <span style={{ color: "green" }}> ( You )</span>
+                  )}
+                </td>
+                <td>
+                  <a href={`mailto:${user.email}`}>{user.mail}</a>
                 </td>
                 <td>
                   {user.isAdmin ? (
@@ -59,7 +87,11 @@ const UserList = () => {
                       <i className="fas fa-edit"></i>
                     </Button>
                   </Link>
-                  <Button variant="danger" className="btn-sm">
+                  <Button
+                    variant="danger"
+                    className="btn-sm"
+                    onClick={() => deleteUserHanlder(user._id)}
+                  >
                     <i className="fas fa-trash"></i>
                   </Button>
                 </td>

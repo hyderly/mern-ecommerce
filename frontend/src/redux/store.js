@@ -19,6 +19,7 @@ import {
   userDetailsReducer,
   updateProfileReducer,
   userListReducer,
+  deleteUserReducer,
 } from "./user/user.reducer";
 
 const middlewares = [thunk];
@@ -52,10 +53,12 @@ const rootReducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdateProfile: updateProfileReducer,
   userList: userListReducer,
+  deleteUser: deleteUserReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMyList: orderMyListReducer,
+
 });
 
 const initialState = {

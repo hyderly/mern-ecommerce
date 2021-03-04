@@ -8,6 +8,7 @@ import {
   getUserProfile,
   updateUserProfile,
   getAllUsers,
+  deleteUser,
 } from "../controllers/userController.js";
 
 // User protected route
@@ -25,5 +26,6 @@ router
   .route("/profile")
   .get(protectRoute, getUserProfile)
   .put(protectRoute, updateUserProfile);
+router.route("/:id").delete(protectRoute, adminProtectRoute, deleteUser);
 
 export default router;
