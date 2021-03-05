@@ -25,16 +25,16 @@ blue-1: #40739e;
 blue-2: #487eb0; */
 
 .form {
-  max-width: 25vw;
+  max-width: 30vw;
   margin: 100px auto;
   background-color: #f7f7f7;
 }
 
 .form-title {
-  font-size: 28px;
-  font-weight: 300;
+  font-size: 32px;
+  font-weight: 500;
   text-align: center;
-  padding-bottom: 5px;
+  padding: 15px 0;
   border-bottom: 1px solid #000;
   background-color: #222;
   color: #fff;
