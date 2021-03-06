@@ -19,6 +19,7 @@ import {
   userDetailsReducer,
   updateProfileReducer,
   userListReducer,
+  updateUserReducer,
   deleteUserReducer,
 } from "./user/user.reducer";
 
@@ -47,18 +48,21 @@ const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
 const rootReducer = combineReducers({
   productList: productReducer,
   productDetail: productDetailReducer,
+
   cart: cartReducer,
+
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: updateProfileReducer,
   userList: userListReducer,
+  updateUser: updateUserReducer,
   deleteUser: deleteUserReducer,
+
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMyList: orderMyListReducer,
-
 });
 
 const initialState = {

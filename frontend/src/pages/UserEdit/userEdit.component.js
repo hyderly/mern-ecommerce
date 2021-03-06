@@ -5,13 +5,21 @@ import { Link } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
-import { getUserDetails } from "../../redux/user/user.actions";
+import { getUserDetails, updateUserData } from "../../redux/user/user.actions";
+import { UserUpdateTypes } from "../../redux/user/user.types";
 
 const UserEdit = ({ match, history }) => {
   const userId = match.params.id;
 
   const userDetails = useSelector(state => state.userDetails);
   const { loading, error, user } = userDetails;
+
+  const updateUser = useSelector(state => state.updateUser);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = updateUser;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,17 +28,30 @@ const UserEdit = ({ match, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!user.name || user._id !== userId) {
-      dispatch(getUserDetails(userId));
+    if (successUpdate) {
+      dispatch({ type: UserUpdateTypes.USER_UPDATE_RESET });
+      history.push("admin/userlist");
     } else {
-      setName(user.name);
-      setEmail(user.email);
-      setIsAdmin(user.isAdmin);
+      if (!user.name || user._id !== userId) {
+        dispatch(getUserDetails(userId));
+      } else {
+        setName(user.name);
+        setEmail(user.email);
+        setIsAdmin(user.isAdmin);
+      }
     }
-  }, [dispatch, user, userId]);
+  }, [history, dispatch, user, userId, successUpdate]);
 
   const submitHandler = e => {
     e.preventDefault();
+    dispatch(
+      updateUserData({
+        _id: userId,
+        name,
+        email,
+        isAdmin,
+      })
+    );
   };
 
   return (
@@ -40,7 +61,10 @@ const UserEdit = ({ match, history }) => {
       </Link>
       <form className="form" onSubmit={submitHandler}>
         <h1 className="form-title">Edit User</h1>
-
+        {loadingUpdate && <WithSpinner />}
+        {errorUpdate && (
+          <ErrorMessage styleType="danger">{errorUpdate}</ErrorMessage>
+        )}
         {loading ? (
           <WithSpinner />
         ) : error ? (

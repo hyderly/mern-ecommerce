@@ -6,6 +6,7 @@ import {
   UpdateProfileTypes,
   UserListTypes,
   UserDeleteTypes,
+  UserUpdateTypes,
 } from "./user.types";
 
 import { OrderMyListTypes } from "../order/order.types";
@@ -205,11 +206,46 @@ export const deleteUserByAdmin = userId => async (dispatch, getState) => {
     await axios.delete(`/api/users/${userId}`, config);
 
     dispatch({
-      type: UserDeleteTypes.USER_DELETE_SUCCESS
+      type: UserDeleteTypes.USER_DELETE_SUCCESS,
     });
   } catch (error) {
     dispatch({
       type: UserDeleteTypes.USER_DELETE_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+export const updateUserData = user => async (dispatch, getState) => {
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
+  try {
+    dispatch({
+      type: UserUpdateTypes.USER_UPDATE_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/users/${user._id}`, config);
+
+    dispatch({
+      type: UserUpdateTypes.USER_UPDATE_SUCCESS,
+    });
+
+    dispatch({
+      type: UserDetailsTypes.USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UserUpdateTypes.USER_UPDATE_FAIL,
       payload: error.response.data.error,
     });
   }
