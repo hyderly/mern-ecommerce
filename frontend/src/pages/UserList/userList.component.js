@@ -10,7 +10,7 @@ import { getUserList, deleteUserByAdmin } from "../../redux/user/user.actions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const UserList = ({ history }) => {
+const UserListPage = ({ history }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector(state => state.userLogin);
@@ -68,7 +68,7 @@ const UserList = ({ history }) => {
                 <td>{user._id}</td>
                 <td>
                   {user.name}
-                  {user.name === userInfo.name && (
+                  {user.email === userInfo.email && (
                     <span style={{ color: "green" }}> ( You )</span>
                   )}
                 </td>
@@ -105,4 +105,4 @@ const UserList = ({ history }) => {
   );
 };
 
-export default UserList;
+export default UserListPage;

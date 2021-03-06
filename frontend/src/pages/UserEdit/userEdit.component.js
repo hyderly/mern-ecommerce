@@ -8,7 +8,7 @@ import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 import { getUserDetails, updateUserData } from "../../redux/user/user.actions";
 import { UserUpdateTypes } from "../../redux/user/user.types";
 
-const UserEdit = ({ match, history }) => {
+const UserEditPage = ({ match, history }) => {
   const userId = match.params.id;
 
   const userDetails = useSelector(state => state.userDetails);
@@ -112,4 +112,4 @@ const UserEdit = ({ match, history }) => {
   );
 };
 
-export default UserEdit;
+export default UserEditPage;

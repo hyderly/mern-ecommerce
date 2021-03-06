@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
+import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-
+import { LinkContainer } from "react-router-bootstrap";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { logout } from "../../redux/user/user.actions";
 
-import "./header.styles.css";
-
 const Header = () => {
-  const [dropDown, setDropDown] = useState(false);
-  const { userInfo } = useSelector(state => state.userLogin);
-
   const dispatch = useDispatch();
+
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -18,58 +17,52 @@ const Header = () => {
 
   return (
     <header>
-      <div className="navbar">
-        <div>
-          <Link className="home-link" to="/">
-            ProShop
-          </Link>
-        </div>
-        <div>
-          <ul className="sub-links">
-            <li>
-              <Link to="/cart">
-                <i className="fas fa-cart-plus"></i>
-                <span>Cart</span>
-              </Link>
-            </li>
-            <li>
+      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>ProShop</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <LinkContainer to="/cart">
+                <Nav.Link>
+                  <i className="fas fa-shopping-cart"></i> Cart
+                </Nav.Link>
+              </LinkContainer>
               {userInfo ? (
-                <div className="drop-down">
-                  <span
-                    className="drop-down-title"
-                    onClick={() => setDropDown(!dropDown)}
-                  >
-                    {userInfo.name} <i className="fas fa-caret-down"></i>
-                  </span>
-                  {dropDown ? (
-                    <div className="drop-down-box">
-                      <span className="drop-down-item">
-                        <Link
-                          onClick={() => setDropDown(!dropDown)}
-                          to="/profile"
-                        >
-                          Profile
-                        </Link>
-                      </span>
-
-                      <div onClick={logoutHandler} className="drop-down-item">
-                        Logout
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <NavDropdown title={userInfo.name} id="username">
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : (
-                <Link to="/login">
-                  <i className="fas fa-user"></i>
-                  <span>SignIn</span>
-                </Link>
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    <i className="fas fa-user"></i> Sign In
+                  </Nav.Link>
+                </LinkContainer>
               )}
-            </li>
-          </ul>
-        </div>
-      </div>
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title="Admin" id="adminmenu">
+                  <LinkContainer to="/admin/userlist">
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/productlist">
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </header>
   );
 };

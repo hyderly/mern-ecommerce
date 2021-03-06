@@ -13,8 +13,9 @@ import ShippingPage from "./pages/Shipping/shipping.component";
 import PaymentPage from "./pages/Payment/payment.component";
 import PlaceOrderPage from "./pages/PlaceOrder/placeOrder.component";
 import OrderPage from "./pages/Order/order.component";
-import UserList from "./pages/UserList/userList.component";
-import UserEdit from "./pages/UserEdit/userEdit.component";
+import UserListPage from "./pages/UserList/userList.component";
+import UserEditPage from "./pages/UserEdit/userEdit.component";
+import ProductListPage from "./pages/ProductList/productList.component";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <main className="main-container">
           <Route path="/" component={HomePage} exact />
           <Route path="/product/:id" component={ProductPage} />
+          <Route path="/admin/productlist" component={ProductListPage} />
           <Route path="/cart/:id?" component={CartPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
@@ -32,8 +34,8 @@ const App = () => {
           <Route path="/payment" component={PaymentPage} />
           <Route path="/placeorder" component={PlaceOrderPage} />
           <Route path="/order/:id" component={OrderPage} />
-          <Route path="/admin/userList" component={UserList} />
-          <Route path="/admin/user/:id/edit" component={UserEdit} />
+          <Route path="/admin/userList" component={UserListPage} />
+          <Route path="/admin/user/:id/edit" component={UserEditPage} />
         </main>
       </Switch>
       <Footer />
