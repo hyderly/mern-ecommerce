@@ -30,7 +30,7 @@ const UserEdit = ({ match, history }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: UserUpdateTypes.USER_UPDATE_RESET });
-      history.push("admin/userlist");
+      history.push("/admin/userlist");
     } else {
       if (!user.name || user._id !== userId) {
         dispatch(getUserDetails(userId));

@@ -120,7 +120,7 @@ export const getUserDetails = id => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UserDetailsTypes.USER_DETAILS_FAIL,
-      payload: error.response.data.error,
+      payload: error.response?.data.error,
     });
   }
 };
@@ -233,7 +233,7 @@ export const updateUserData = user => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`/api/users/${user._id}`, config);
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
 
     dispatch({
       type: UserUpdateTypes.USER_UPDATE_SUCCESS,
@@ -246,7 +246,7 @@ export const updateUserData = user => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UserUpdateTypes.USER_UPDATE_FAIL,
-      payload: error.response.data.error,
+      payload: error.response?.data.error,
     });
   }
 };

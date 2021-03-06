@@ -43,6 +43,7 @@ const UserList = ({ history }) => {
   return (
     <>
       <h1>Users</h1>
+      {loadingDeleteUser && <WithSpinner/>}
       {errorDeleteUser && (
         <ErrorMessage styleType="danger">{errorDeleteUser}</ErrorMessage>
       )}
@@ -72,7 +73,7 @@ const UserList = ({ history }) => {
                   )}
                 </td>
                 <td>
-                  <a href={`mailto:${user.email}`}>{user.mail}</a>
+                  <a href={`mailto:${user.email}`}>{user.email}</a>
                 </td>
                 <td>
                   {user.isAdmin ? (
