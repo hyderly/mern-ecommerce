@@ -6,7 +6,13 @@ import { Button, Table, Row, Col } from "react-bootstrap";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
-import { listProducts } from "../../redux/product/product.actions";
+import {
+  listProducts,
+  deleteProduct,
+  createProductItem,
+} from "../../redux/product/product.actions";
+
+import { ProductCreateTypes } from "../../redux/product/product.types";
 
 const ProductListPage = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -17,21 +23,51 @@ const ProductListPage = ({ history, match }) => {
   const productList = useSelector(state => state.productList);
   const { loading, error, products } = productList;
 
+  const productCreate = useSelector(state => state.productCreate);
+  const {
+    loading: loadingCreateProduct,
+    error: errorCreateProduct,
+    success: successCreateProduct,
+    product: createdProduct,
+  } = productCreate;
+
+  const productDelete = useSelector(state => state.productDelete);
+  const {
+    loading: loadingDeleteProduct,
+    error: errorDeleteProduct,
+    success: successDeleteProduct,
+  } = productDelete;
+
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: ProductCreateTypes });
+
+    if (!userInfo.isAdmin) {
       history.push("/login");
     }
-  }, [dispatch, history, userInfo]);
+
+    if (successCreateProduct) {
+      history.push(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDeleteProduct,
+    successCreateProduct,
+    createdProduct,
+  ]);
 
   const createProductHandler = () => {
-    // Create Product action dispatch
+    dispatch(createProductItem());
   };
 
-  const deleteUserHanlder = () => {
-      // Delete Product action dispatch
-  }
+  const deleteUserHanlder = productId => {
+    if (window.confirm("Are you sure")) {
+      dispatch(deleteProduct(productId));
+    }
+  };
 
   return (
     <>
@@ -45,7 +81,14 @@ const ProductListPage = ({ history, match }) => {
           </Button>
         </Col>
       </Row>
-
+      {loadingCreateProduct && <WithSpinner />}
+      {errorCreateProduct && (
+        <ErrorMessage styleType="danger">{errorCreateProduct}</ErrorMessage>
+      )}
+      {loadingDeleteProduct && <WithSpinner />}
+      {errorDeleteProduct && (
+        <ErrorMessage styleType="danger">{errorDeleteProduct}</ErrorMessage>
+      )}
       {loading ? (
         <WithSpinner />
       ) : error ? (

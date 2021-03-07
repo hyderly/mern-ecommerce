@@ -16,6 +16,7 @@ import OrderPage from "./pages/Order/order.component";
 import UserListPage from "./pages/UserList/userList.component";
 import UserEditPage from "./pages/UserEdit/userEdit.component";
 import ProductListPage from "./pages/ProductList/productList.component";
+import ProductEditPage from "./pages/ProductEdit/productEdit.component";
 
 const App = () => {
   return (
@@ -25,7 +26,6 @@ const App = () => {
         <main className="main-container">
           <Route path="/" component={HomePage} exact />
           <Route path="/product/:id" component={ProductPage} />
-          <Route path="/admin/productlist" component={ProductListPage} />
           <Route path="/cart/:id?" component={CartPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
@@ -36,6 +36,8 @@ const App = () => {
           <Route path="/order/:id" component={OrderPage} />
           <Route path="/admin/userList" component={UserListPage} />
           <Route path="/admin/user/:id/edit" component={UserEditPage} />
+          <Route path="/admin/productlist" component={ProductListPage} />
+          <Route path="/admin/product/:id/edit" component={ProductEditPage} />
         </main>
       </Switch>
       <Footer />

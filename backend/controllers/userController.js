@@ -21,7 +21,11 @@ export const authUser = asyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
-  } else {
+  }if(!email || !password){
+    res.status(401);
+    throw new Error("Please Enter and Paswword");
+  }
+   else {
     res.status(401);
     throw new Error("Invalid mail or password");
   }

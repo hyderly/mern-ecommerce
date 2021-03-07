@@ -13,7 +13,7 @@ import {
   updateUser,
 } from "../controllers/userController.js";
 
-// User protected route
+// User/Admin protected route
 import {
   protectRoute,
   adminProtectRoute,

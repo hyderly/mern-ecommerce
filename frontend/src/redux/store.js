@@ -4,7 +4,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
-import { productReducer } from "./product/product.reducer";
+import {
+  productReducer,
+  productDeleteReducer,
+  productCreateReducer,
+  productUpdateReducer,
+} from "./product/product.reducer";
 import { productDetailReducer } from "./productDetail/productDetail.reducer";
 import {
   orderCreateReducer,
@@ -48,6 +53,9 @@ const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
 const rootReducer = combineReducers({
   productList: productReducer,
   productDetail: productDetailReducer,
+  productDelete: productDeleteReducer,
+  productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
 
   cart: cartReducer,
 

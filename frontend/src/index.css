@@ -25,7 +25,7 @@ blue-1: #40739e;
 blue-2: #487eb0; */
 
 .form {
-  max-width: 30vw;
+  max-width: 40vw;
   margin: 100px auto;
   background-color: #f7f7f7;
 }
@@ -37,7 +37,7 @@ blue-2: #487eb0; */
   padding: 15px 0;
   border-bottom: 1px solid #000;
   background-color: #222;
-  color: #fff;
+  color: #f7f7f7;
 }
 
 .form-box {
@@ -53,7 +53,7 @@ blue-2: #487eb0; */
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  margin-bottom: 30px;
+  margin: 15px 0;
 }
 
 .form-group label {
@@ -66,7 +66,7 @@ blue-2: #487eb0; */
 .form-group input {
   margin-top: 5px;
   font-size: 16px;
-  width: 15vw;
+  width: 30vw;
   padding: 10px 30px;
 }
 
