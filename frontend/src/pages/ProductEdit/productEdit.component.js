@@ -44,7 +44,7 @@ const ProductEditPage = ({ match, history }) => {
         setName(product.name);
         setPrice(product.price);
         setImage(product.image);
-        setBrand(product.Brand);
+        setBrand(product.brand);
         setCategory(product.category);
         setCountInStock(product.countInStock);
         setDescription(product.description);
