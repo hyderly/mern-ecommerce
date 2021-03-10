@@ -24,3 +24,8 @@ export const OrderMyListTypes = {
   ORDER_MY_LIST_RESET: "ORDER_MY_LIST_RESET",
 };
 
+export const OrderListTypes = {
+  ORDER_LIST_REQUEST: "ORDER_LIST_REQUEST",
+  ORDER_LIST_SUCCESS: "ORDER_LIST_SUCCESS",
+  ORDER_LIST_FAIL: "ORDER_LIST_FAIL",
+};

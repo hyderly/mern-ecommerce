@@ -16,6 +16,7 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderMyListReducer,
+  orderListReducer,
 } from "./order/order.reducer";
 import { cartReducer } from "./cart/cart.reducer";
 import {
@@ -71,6 +72,7 @@ const rootReducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMyList: orderMyListReducer,
+  orderList: orderListReducer,
 });
 
 const initialState = {

@@ -62,7 +62,6 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
-    
 
     const updatedOrder = await order.save();
 
@@ -73,13 +72,25 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
   }
 });
 
-
 // @desc Get loggedIn user Orders
-// @route PUT /api/orders/myorders
+// @route Get /api/orders/myorders
 // @access private
 
-export const getMyOrders = asyncHandler(async(req, res) => {
-  const orders = await Order.find({user: req.user._id});
+export const getMyOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
   res.json(orders);
-})
+});
 
+// @desc Get All Orders
+// @route GET /api/orders
+// @access private/ Admin
+
+export const getAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate('user', 'id name');
+  if (orders) {
+    res.json(orders);
+  } else {
+    res.status(404);
+    throw new Error("No Order Found");
+  }
+});

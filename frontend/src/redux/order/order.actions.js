@@ -5,6 +5,7 @@ import {
   OrderDetailsTypes,
   OrderPayTypes,
   OrderMyListTypes,
+  OrderListTypes,
 } from "./order.types";
 
 export const createOrder = order => async (dispatch, getState) => {
@@ -68,10 +69,13 @@ export const getOrderDetails = id => async (dispatch, getState) => {
   }
 };
 
-export const payOrder = (orderId, paymentResult) => async (dispatch, getState) => {
+export const payOrder = (orderId, paymentResult) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({
-      type: OrderPayTypes.ORDER_PAY_REQUEST
+      type: OrderPayTypes.ORDER_PAY_REQUEST,
     });
 
     const {
@@ -80,12 +84,16 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.put(`/api/orders/${orderId}/pay`, paymentResult, config);
+    const { data } = await axios.put(
+      `/api/orders/${orderId}/pay`,
+      paymentResult,
+      config
+    );
 
     dispatch({
       type: OrderPayTypes.ORDER_PAY_SUCCESS,
@@ -99,34 +107,62 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
   }
 };
 
-
-export const getMyOrderList =  () => async (dispatch, getState) => {
+export const getMyOrderList = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: OrderMyListTypes.ORDER_MY_LIST_REQUEST
-    })
+      type: OrderMyListTypes.ORDER_MY_LIST_REQUEST,
+    });
 
     const {
       userLogin: { userInfo },
     } = getState();
-  
+
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const {data} = await axios.get('/api/orders/myorders', config);
+    const { data } = await axios.get("/api/orders/myorders", config);
 
     dispatch({
       type: OrderMyListTypes.ORDER_MY_LIST_SUCCESS,
-      payload: data
-    })
-    
+      payload: data,
+    });
   } catch (error) {
-      dispatch({
-        type: OrderMyListTypes.ORDER_MY_LIST_FAIL,
-        payload: error.response?.data.error
-      })
+    dispatch({
+      type: OrderMyListTypes.ORDER_MY_LIST_FAIL,
+      payload: error.response?.data.error,
+    });
   }
-}
+};
+
+export const getOrderList = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: OrderListTypes.ORDER_LIST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/orders", config);
+
+    dispatch({
+      type: OrderListTypes.ORDER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: OrderListTypes.ORDER_LIST_FAIL,
+      payload: error.response?.data.error,
+    });
+  }
+};

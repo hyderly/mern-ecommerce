@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -20,6 +21,7 @@ const ProductEditPage = ({ match, history }) => {
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -68,6 +70,29 @@ const ProductEditPage = ({ match, history }) => {
     );
   };
 
+  const uploadFileHandler = async e => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      const { data } = await axios.post("/api/upload", formData, config);
+
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
   return (
     <>
       <Link to="/admin/productlist" className="product-btn">
@@ -113,6 +138,11 @@ const ProductEditPage = ({ match, history }) => {
                 placeholder="Enter Product Image Url"
               />
             </div>
+            <div className="form-group">
+              <label>Image</label>
+              <input id="image-file" onChange={uploadFileHandler} type="file" />
+            </div>
+            {uploading && <WithSpinner />}
 
             <div className="form-group">
               <label>Brand</label>
