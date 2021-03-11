@@ -6,6 +6,7 @@ import {
   OrderPayTypes,
   OrderMyListTypes,
   OrderListTypes,
+  OrderDeliverTypes,
 } from "./order.types";
 
 export const createOrder = order => async (dispatch, getState) => {
@@ -102,6 +103,36 @@ export const payOrder = (orderId, paymentResult) => async (
   } catch (error) {
     dispatch({
       type: OrderPayTypes.ORDER_PAY_FAIL,
+      payload: error.response?.data.error,
+    });
+  }
+};
+
+export const deliverOrder = orderId => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: OrderDeliverTypes.ORDER_DELIVER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/orders/${orderId}/deliver`, {}, config);
+
+    dispatch({
+      type: OrderDeliverTypes.ORDER_DELIVER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: OrderDeliverTypes.ORDER_DELIVER_FAIL,
       payload: error.response?.data.error,
     });
   }

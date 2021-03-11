@@ -4,28 +4,58 @@ import { useDispatch, useSelector } from "react-redux";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 
-import { getOrderDetails, payOrder} from "../../redux/order/order.actions";
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from "../../redux/order/order.actions";
+import {
+  OrderDeliverTypes,
+  OrderPayTypes,
+} from "../../redux/order/order.types";
 
-const OrderPage = ({ match }) => {
+const OrderPage = ({ history, match }) => {
   const orderId = match.params.id;
   const dispatch = useDispatch();
 
   const orderDetails = useSelector(state => state.orderDetails);
   const { order, error, loading } = orderDetails;
 
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
+
   const orderPay = useSelector(state => state.orderPay);
-  const { success: successPay, loading: loadingPay, error: errorPay } = orderPay;
+  const { success: successPay, error: errorPay } = orderPay;
+
+  const orderDeliver = useSelector(state => state.orderDeliver);
+  const {
+    success: successDeliver,
+    error: errorDeliver,
+    loading: loadingDeliver,
+  } = orderDeliver;
 
   useEffect(() => {
-    dispatch(getOrderDetails(orderId));
+    if (!userInfo) {
+      history.push("/login");
+    }
+    if (!order || successPay || successDeliver) {
+      dispatch({ type: OrderPayTypes.ORDER_PAY_RESET });
+      dispatch({ type: OrderDeliverTypes.ORDER_DELIVER_RESET });
+      dispatch(getOrderDetails(orderId));
+    }
+
     console.log(order);
-  }, [dispatch, orderId, successPay]);
+  }, [history, userInfo, dispatch, orderId, successPay, order, successDeliver]);
 
   const submitPaymentHandler = () => {
-    if(!successPay){
-      dispatch(payOrder(orderId))
+    if (!successPay) {
+      dispatch(payOrder(orderId));
     }
-  }
+  };
+
+  const deliverHander = () => {
+    dispatch(deliverOrder(order._id));
+  };
 
   return loading ? (
     <WithSpinner />
@@ -139,14 +169,36 @@ const OrderPage = ({ match }) => {
                 ${order.totalPrice.toFixed(2)}
               </span>
             </div>
-            {errorPay ? <ErrorMessage styleType="danger">{errorPay}</ErrorMessage>: ''}
-            
+            {errorPay ? (
+              <ErrorMessage styleType="danger">{errorPay}</ErrorMessage>
+            ) : (
+              ""
+            )}
+
             <div className="summery-item">
-                {order.isPaid ? '': (
-                  <button  class="form-btn summery-item" onClick={submitPaymentHandler}>Pay now</button>
-                )}     
+              {order.isPaid ? (
+                ""
+              ) : (
+                <button
+                  class="form-btn summery-item"
+                  onClick={submitPaymentHandler}
+                >
+                  Pay now
+                </button>
+              )}
+              {loadingDeliver && <WithSpinner />}
+              {errorDeliver && (
+                <ErrorMessage styleType="danger">{errorDeliver}</ErrorMessage>
+              )}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <button class="form-btn summery-item" onClick={deliverHander}>
+                    Mark As Deliver
+                  </button>
+                )}
             </div>
-            
           </div>
         </div>
       </div>

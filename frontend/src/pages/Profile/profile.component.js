@@ -14,6 +14,8 @@ import {
 
 import { getMyOrderList } from "../../redux/order/order.actions";
 
+import { OrderMyListTypes } from "../../redux/order/order.types";
+
 import "./profile.styles.css";
 
 const ProfilePage = ({ location, history }) => {
@@ -42,6 +44,7 @@ const ProfilePage = ({ location, history }) => {
       history.push("/login");
     } else {
       if (!user.name) {
+        dispatch({ type: OrderMyListTypes.ORDER_MY_LIST_RESET });
         dispatch(getUserDetails("profile"));
         dispatch(getMyOrderList());
       } else {
