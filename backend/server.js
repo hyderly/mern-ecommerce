@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
+import morgan from "morgan";
 
 import errorHanlder from "./middlewares/errorHandler.js";
 
@@ -12,14 +13,17 @@ import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 
+dotenv.config();
+connectDB();
+
 const app = express();
 
 // body parser
 app.use(express.json());
 
-dotenv.config();
-
-connectDB();
+if (process.env.NODE_ENV == "development") {
+  app.use(morgan("dev"));
+}
 
 app.get("/", (req, res) => {
   res.json("API running ...");
@@ -34,7 +38,6 @@ app.use("/api/upload", uploadRoutes);
 // ErrorHandler Custom Middleware
 // Always put after routes
 app.use(errorHanlder);
-
 
 // __direname only availabe for commonjs so we mimic the __direname my path.resolve()
 const __dirname = path.resolve();
