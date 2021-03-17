@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Meta from '../../components/Helmat';
 
 import { Button, Table } from "react-bootstrap";
 
@@ -66,6 +67,7 @@ const ProfilePage = ({ location, history }) => {
 
   return (
     <div className="profile-page">
+      <Meta title={`${name} profile`}/>
       <form className="profile-form" onSubmit={submitHandler}>
         {message && <ErrorMessage styleType="danger">{message}</ErrorMessage>}
         {error && <ErrorMessage styleType="danger">{error}</ErrorMessage>}

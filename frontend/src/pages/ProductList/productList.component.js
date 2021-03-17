@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import Meta from '../../components/Helmat';
+
+
 import { Link } from "react-router-dom";
 import { Button, Table, Row, Col } from "react-bootstrap";
 
@@ -71,6 +75,7 @@ const ProductListPage = ({ history, match }) => {
 
   return (
     <>
+      <Meta title="Product List"/>
       <Row className="align-items-center">
         <Col>
           <h1>Products</h1>

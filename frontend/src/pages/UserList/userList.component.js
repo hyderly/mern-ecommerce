@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
+import Meta from '../../components/Helmat';
+
+
 import { Button, Table } from "react-bootstrap";
 
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
@@ -42,6 +46,7 @@ const UserListPage = ({ history }) => {
 
   return (
     <>
+    <Meta title="User List"/>
       <h1>Users</h1>
       {loadingDeleteUser && <WithSpinner/>}
       {errorDeleteUser && (

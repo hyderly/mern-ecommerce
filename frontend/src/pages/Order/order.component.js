@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import Meta from '../../components/Helmat';
+
+
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 
@@ -63,6 +67,7 @@ const OrderPage = ({ history, match }) => {
     <ErrorMessage styleType="danger">{error}</ErrorMessage>
   ) : (
     <>
+    <Meta title="Order Detail"/>
       <div className="place-order-page">
         <div className="overview-box-1">
           <h1>Order </h1>

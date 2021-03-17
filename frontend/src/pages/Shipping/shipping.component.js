@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Meta from '../../components/Helmat';
+
 import CheckOutStepper from "../../components/CheckoutStepper/checkoutStepper.component";
 
 import { saveShippingAddress } from "../../redux/cart/cart.actions";
@@ -30,6 +32,7 @@ const ShippingPage = ({ history }) => {
 
   return (
     <>
+    <Meta title="Shipping"/>
       <CheckOutStepper step1 step2 />
       <form className="form" onSubmit={submitHandler}>
         <h1 className="form-title">Shipping Details</h1>

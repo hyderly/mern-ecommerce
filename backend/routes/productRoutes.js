@@ -9,6 +9,7 @@ import {
   deleteProduct,
   updateProduct,
   createProductReview,
+  geTopProducts
 } from "../controllers/productController.js";
 
 // User/Admin protected route
@@ -21,6 +22,8 @@ router
   .route("/")
   .get(getProducts)
   .post(protectRoute, adminProtectRoute, createProduct);
+
+router.get("/top", geTopProducts);
 
 router
   .route("/:id")

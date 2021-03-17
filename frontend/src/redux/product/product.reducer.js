@@ -4,6 +4,7 @@ import {
   ProductCreateTypes,
   ProductUpdateTypes,
   ProductCreateReviewTypes,
+  TopProductsTypes
 } from "./product.types";
 
 export const productReducer = (state = { products: [] }, action) => {
@@ -120,3 +121,26 @@ export const productCreateReviewReducer = (state = {}, action) => {
       return state;
   }
 };
+
+
+export const productTopRatedReducer = (state = {products: []}, action) => {
+  switch (action.type) {
+    case TopProductsTypes.PRODUCT_TOP_REQUEST:
+      return{
+        loading: true,
+        ...state
+      }
+    case TopProductsTypes.PRODUCT_TOP_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload
+      }
+    case TopProductsTypes.PRODUCT_TOP_FAIL:
+      return {
+        loading: false,
+        error: action.payload
+      }
+    default:
+      return state
+  }
+}

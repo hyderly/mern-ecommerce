@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import Meta from '../../components/Helmat';
+
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
@@ -38,6 +40,8 @@ const RegisterPage = ({ location, history }) => {
   };
 
   return (
+    <>
+    <Meta title='Register'/>
     <form className="form" onSubmit={submitHandler}>
       {message && <ErrorMessage styleType="danger">{message}</ErrorMessage>}
       {error && <ErrorMessage styleType="danger">{error}</ErrorMessage>}
@@ -96,6 +100,7 @@ const RegisterPage = ({ location, history }) => {
         </div>
       </div>
     </form>
+    </>
   );
 };
 

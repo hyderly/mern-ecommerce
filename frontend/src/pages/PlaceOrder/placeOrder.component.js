@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import Meta from '../../components/Helmat';
+
+
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import CheckOutStepper from "../../components/CheckoutStepper/checkoutStepper.component";
@@ -55,6 +59,7 @@ const PlaceOrderPage = ({ history }) => {
 
   return (
     <>
+      <Meta title="Place Order"/>
       <CheckOutStepper step1 step2 step3 step4 />
       <div className="place-order-page">
         <div className="overview-box-1">

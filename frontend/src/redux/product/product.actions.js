@@ -6,6 +6,7 @@ import {
   ProductCreateTypes,
   ProductUpdateTypes,
   ProductCreateReviewTypes,
+  TopProductsTypes
 } from "./product.types";
 
 export const listProducts = () => async dispatch => {
@@ -151,3 +152,24 @@ export const createProductReview = (productId, review) => async (
     });
   }
 };
+
+
+export const listTopProducts = () => async (dispatch) => {
+  try {
+    dispatch({type: TopProductsTypes.PRODUCT_TOP_REQUEST});
+
+
+    const {data} = await axios.get("/api/products/top");
+
+    dispatch({
+      type: TopProductsTypes.PRODUCT_TOP_SUCCESS,
+      payload: data
+    })
+    
+  } catch (error) {
+    dispatch({
+      type: TopProductsTypes.PRODUCT_TOP_FAIL,
+      payload: error.response?.data.error,
+    })
+  }
+}

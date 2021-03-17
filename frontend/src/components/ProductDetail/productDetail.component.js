@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Meta from '../Helmat';
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -78,6 +79,7 @@ const ProductDetail = ({ history, match }) => {
         <ErrorMessage>{error}</ErrorMessage>
       ) : (
         <>
+          <Meta title={product.name}/>
           <div className="product-detail">
             <div className="product-img">
               <img src={product.image} alt={product.name} />

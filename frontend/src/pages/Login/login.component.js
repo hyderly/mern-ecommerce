@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import Meta from '../../components/Helmat';
+
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
 
@@ -30,6 +32,8 @@ const LoginPage = ({ location, history }) => {
   };
 
   return (
+    <>
+    <Meta title="Login"/>
     <form className="form" onSubmit={submitHandler}>
       {error && <ErrorMessage styleType="danger">{error}</ErrorMessage>}
       <h1 className="form-title">SignIn</h1>
@@ -71,6 +75,7 @@ const LoginPage = ({ location, history }) => {
         </div>
       </div>
     </form>
+    </>
   );
 };
 

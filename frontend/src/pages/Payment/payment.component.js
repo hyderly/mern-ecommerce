@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Meta from '../../components/Helmat';
+
 import { savePaymentMethod } from "../../redux/cart/cart.actions";
 
 import CheckOutStepper from "../../components/CheckoutStepper/checkoutStepper.component";
@@ -27,6 +29,7 @@ const PaymentPage = ({ history }) => {
 
   return (
     <>
+    <Meta title="payment"/>
       <CheckOutStepper step1 step2 step3 />
       <form className="form" onSubmit={submitHandler}>
         <h1 className="form-title">Payment Method</h1>
