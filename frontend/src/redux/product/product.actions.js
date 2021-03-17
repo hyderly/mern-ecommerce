@@ -5,6 +5,7 @@ import {
   ProductDeleteTypes,
   ProductCreateTypes,
   ProductUpdateTypes,
+  ProductCreateReviewTypes,
 } from "./product.types";
 
 export const listProducts = () => async dispatch => {
@@ -82,7 +83,7 @@ export const createProductItem = () => async (dispatch, getState) => {
 };
 
 // Update Product by Id
-export const updateProductItem = (product) => async (dispatch, getState) => {
+export const updateProductItem = product => async (dispatch, getState) => {
   const {
     userLogin: { userInfo },
   } = getState();
@@ -97,7 +98,11 @@ export const updateProductItem = (product) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`/api/products/${product._id}`, product, config);
+    const { data } = await axios.put(
+      `/api/products/${product._id}`,
+      product,
+      config
+    );
 
     dispatch({
       type: ProductUpdateTypes.PRODUCT_UPDATE_SUCCESS,
@@ -106,6 +111,42 @@ export const updateProductItem = (product) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ProductUpdateTypes.PRODUCT_UPDATE_FAIL,
+      payload: error.response?.data.error,
+    });
+  }
+};
+
+// Create Review
+export const createProductReview = (productId, review) => async (
+  dispatch,
+  getState
+) => {
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
+  try {
+    dispatch({ type: ProductCreateReviewTypes.PRODUCT_CREATE_REVIEW_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.post(
+      `/api/products/${productId}/review`,
+      review,
+      config
+    );
+
+    dispatch({
+      type: ProductCreateReviewTypes.PRODUCT_CREATE_REVIEW_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: ProductCreateReviewTypes.PRODUCT_CREATE_REVIEW_FAIL,
       payload: error.response?.data.error,
     });
   }
