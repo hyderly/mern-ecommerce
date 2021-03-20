@@ -9,20 +9,20 @@ import {
   TopProductsTypes,
 } from "./product.types";
 
-export const listProducts = (keyword = "") => async dispatch => {
+export const listProducts = (keyword = "", pageNumber = "") => async dispatch => {
   try {
     dispatch({ type: ProductActionTypes.PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get(`/api/products?keyword=${keyword}`);
+    const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`);
 
     dispatch({
       type: ProductActionTypes.PRODUCT_LIST_SUCCESS,
-      payload: data,
+      payload: data
     });
   } catch (error) {
     dispatch({
       type: ProductActionTypes.PRODUCT_LIST_FAIL,
-      payload: error.response.data.error,
+      payload: error.response?.data.error,
     });
   }
 };

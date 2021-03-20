@@ -6,14 +6,18 @@ import Meta from "../../components/Helmat";
 import Products from "../../components/Products/products.component";
 import TopCarousel from "../../components/ProductCarousel/productCarousel.component";
 
-const HomePage = () => {
+const HomePage = ({match}) => {
+
+  const keyword = match.params.keyword;
+
   return (
     <>
       <Meta title="Welcome to proShop | Home" />
-      {/* <TopCarousel/> */}
-      <h1 className="home-title" style={{ "margin-top": "60px" }}>
-        LATEST PRODUCTS
-      </h1>
+      {
+        !keyword &&  <TopCarousel/>
+      }
+     
+      
       <Products />
     </>
   );

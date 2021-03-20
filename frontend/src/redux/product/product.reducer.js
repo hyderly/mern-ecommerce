@@ -7,7 +7,7 @@ import {
   TopProductsTypes
 } from "./product.types";
 
-export const productReducer = (state = { products: [] }, action) => {
+export const productReducer = (state = { products: [], error: 'No Product Found' }, action) => {
   switch (action.type) {
     case ProductActionTypes.PRODUCT_LIST_REQUEST:
       return {
@@ -16,8 +16,13 @@ export const productReducer = (state = { products: [] }, action) => {
       };
     case ProductActionTypes.PRODUCT_LIST_SUCCESS:
       return {
+        ...state,
         loading: false,
-        products: action.payload,
+        products: action.payload.products,
+        page: action.payload.page,
+        pages: action.payload.pages,
+
+    
       };
     case ProductActionTypes.PRODUCT_LIST_FAIL:
       return {

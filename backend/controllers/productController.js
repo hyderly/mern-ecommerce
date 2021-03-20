@@ -8,6 +8,8 @@ import Product from "../models/Product.js";
 // @access public
 
 export const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
         name: {
@@ -17,10 +19,12 @@ export const getProducts = asyncHandler(async (req, res) => {
       }
     : {};
 
-  const products = await Product.find({ ...keyword });
+  const count = await Product.count({...keyword});
+  const products = await Product.find({ ...keyword }).limit(pageSize).skip(pageSize * (page -1));
 
   if (products) {
-    res.status(200).json(products);
+    res.status(200)
+    .json({products, page, pages: Math.ceil(count / pageSize)});
   } else {
     res.status(400);
     throw new Error("Products Not Found");

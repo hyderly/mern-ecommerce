@@ -8,6 +8,7 @@ import { Button, Table, Row, Col } from "react-bootstrap";
 
 import ErrorMessage from "../../components/ErrorMessage/error-message.component";
 import WithSpinner from "../../components/WithSpinner/with-spinner.component";
+import Paginate from '../../components/Paginate/paginate.component';
 
 import {
   listProducts,
@@ -18,13 +19,17 @@ import {
 import { ProductCreateTypes } from "../../redux/product/product.types";
 
 const ProductListPage = ({ history, match }) => {
+
+
+  const pageNumber = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
   const productList = useSelector(state => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   const productCreate = useSelector(state => state.productCreate);
   const {
@@ -51,7 +56,7 @@ const ProductListPage = ({ history, match }) => {
     if (successCreateProduct) {
       history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts('', pageNumber));
     }
   }, [
     dispatch,
@@ -60,6 +65,7 @@ const ProductListPage = ({ history, match }) => {
     successDeleteProduct,
     successCreateProduct,
     createdProduct,
+    pageNumber
   ]);
 
   const createProductHandler = () => {
@@ -98,6 +104,7 @@ const ProductListPage = ({ history, match }) => {
       ) : error ? (
         <ErrorMessage styleType="danger">{error}</ErrorMessage>
       ) : (
+        <>
         <Table stripe bordered hover responsive className="table-sm">
           <thead>
             <tr>
@@ -135,6 +142,8 @@ const ProductListPage = ({ history, match }) => {
             ))}
           </tbody>
         </Table>
+        <Paginate page={page} pages={pages} isAdmin={true}/>
+        </>
       )}
     </>
   );
