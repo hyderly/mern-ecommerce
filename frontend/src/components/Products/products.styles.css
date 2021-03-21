@@ -1,5 +1,6 @@
 .products {
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 400px));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 400px));
   grid-gap: 10px 30px;
 }

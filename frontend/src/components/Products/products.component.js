@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import {Col} from 'react-bootstrap'
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -34,7 +33,7 @@ const Products = ({ match }) => {
       {loading ? (
         <WithSpinner />
       ) : error ? (
-        <ErrorMessage styleType="danger">{error}</ErrorMessage>
+        <ErrorMessage >{error}</ErrorMessage>
       ) : (
         products.map(product => (
           <Product product={product} key={product._id} />

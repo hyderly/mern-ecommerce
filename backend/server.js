@@ -25,9 +25,7 @@ if (process.env.NODE_ENV == "development") {
   app.use(morgan("dev"));
 }
 
-app.get("/", (req, res) => {
-  res.json("API running ...");
-});
+
 
 // Routes Middleware
 app.use("/api/products", productRoutes);
@@ -42,6 +40,21 @@ app.use(errorHanlder);
 // __direname only availabe for commonjs so we mimic the __direname my path.resolve()
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+// Make Front end buil folder "Static" on production environment
+if(process.env.NODE_ENV === 'production'){
+
+  app.use(express.static(path.join(__dirname, '/fronend/build')))
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  })
+}else{
+  app.get("/", (req, res) => {
+    res.json("API running ...");
+  });
+}
+
 
 const PORT = process.env.PORT || 5000;
 

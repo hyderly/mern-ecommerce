@@ -24,7 +24,7 @@ const PlaceOrderPage = ({ history }) => {
     (acc, item) => acc + item.price * item.qty,
     0
   );
-  cart.shippingPrice = cart.itemsTotal > 100 ? 0 : 100;
+  cart.shippingPrice = cart.itemsTotal > 100 ? 0 ? 0 : 0 : 100;
   cart.tax = +(cart.itemsTotal * 0.16);
   cart.subTotal = cart.itemsTotal + cart.shippingPrice + cart.tax;
 
@@ -49,6 +49,10 @@ const PlaceOrderPage = ({ history }) => {
     if (cart.paymentMethod === null) {
       history.push("/payment");
     }
+
+    // if(cartItems.length === 0){
+    //   history.push("/")
+    // }
 
     if (success) {
       history.push(`/order/${order._id}`);
