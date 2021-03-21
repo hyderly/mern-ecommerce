@@ -33,27 +33,28 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 
-// ErrorHandler Custom Middleware
-// Always put after routes
-app.use(errorHanlder);
+
 
 // __direname only availabe for commonjs so we mimic the __direname my path.resolve()
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // Make Front end buil folder "Static" on production environment
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
 
-  app.use(express.static(path.join(__dirname, '/fronend/build')))
-
-  app.get("*", (req, res) => {
+  app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running....')
   })
-}else{
-  app.get("/", (req, res) => {
-    res.json("API running ...");
-  });
 }
+
+// ErrorHandler Custom Middleware
+// Always put after routes
+app.use(errorHanlder);
 
 
 const PORT = process.env.PORT || 5000;
