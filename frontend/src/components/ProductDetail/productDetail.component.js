@@ -130,7 +130,7 @@ const ProductDetail = ({ history, match }) => {
                 <ErrorMessage styleType="danger">No Reviews</ErrorMessage>
               )}
               <ListGroup variant="flush">
-                {product.reviews.map(review => (
+                {product.reviews?.map(review => (
                   <ListGroup.Item key={review._id}>
                     <strong>{review.name}</strong>
                     <Rating value={review.rating} />

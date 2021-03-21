@@ -26,6 +26,7 @@ const App = () => {
       <Switch>
         <main className="main-container">
           <Route path="/" component={HomePage} exact />
+          <Route path="/search/:keyword" component={HomePage} />
           <Route path="/product/:id" component={ProductPage} />
           <Route path="/cart/:id?" component={CartPage} />
           <Route path="/login" component={LoginPage} />

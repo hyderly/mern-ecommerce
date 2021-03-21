@@ -8,7 +8,16 @@ import Product from "../models/Product.js";
 // @access public
 
 export const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
+  const products = await Product.find({ ...keyword });
 
   if (products) {
     res.status(200).json(products);
@@ -141,12 +150,11 @@ export const createProductReview = asyncHandler(async (req, res) => {
   }
 });
 
-
 // @desc Get top Products
 // @route CREATE /api/products/top
 // @access public
 export const geTopProducts = asyncHandler(async (req, res) => {
-  const products  = await Product.find({}).sort({rating: -1}).limit(3)
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
 
-  res.json(products)
-})
+  res.json(products);
+});

@@ -90,7 +90,7 @@ const PlaceOrderPage = ({ history }) => {
                   </Link>
                 </ErrorMessage>
               ) : (
-                cartItems.map(item => (
+                cartItems?.map(item => (
                   <div className="cart-item" key={item.product}>
                     <img
                       className="item-image"

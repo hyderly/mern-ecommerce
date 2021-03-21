@@ -45,7 +45,7 @@ const Cart = ({ match, location, history }) => {
               </Link>
             </ErrorMessage>
           ) : (
-            cartItems.map(item => (
+            cartItems?.map(item => (
               <div className="cart-item" key={item.product}>
                 <img className="item-image" src={item.image} alt={item.name} />
                 <p className="item-title">

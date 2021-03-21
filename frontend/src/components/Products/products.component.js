@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./products.styles.css";
@@ -10,15 +11,17 @@ import ErrorMessage from "../ErrorMessage/error-message.component";
 // Import actions
 import { listProducts } from "../../redux/product/product.actions";
 
-const Products = () => {
+const Products = ({ match }) => {
+  const keyword = match.params.keyword;
+
   const dispatch = useDispatch();
 
   const productList = useSelector(state => state.productList);
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <div className="products">
@@ -27,10 +30,12 @@ const Products = () => {
       ) : error ? (
         <ErrorMessage>{error}</ErrorMessage>
       ) : (
-        products.map(product => <Product product={product} key={product._id} />)
+        products?.map(product => (
+          <Product product={product} key={product._id} />
+        ))
       )}
     </div>
   );
 };
 
-export default Products;
+export default withRouter(Products);
